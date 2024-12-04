@@ -1,0 +1,16 @@
+:root{
+    /* couleur de fond de la barre de navigation */
+    --bs-header-dark-bg:#000000;
+    /* couleur des texte de la barre de navigation */
+    --bs-menu-dark-item-color:#ffffff;
+    /* couleur de fond du footer */
+    --bs-footer-bg:#13be3e;
+    /* couleur des textes du footer */
+    --bs-footer-text-color:#ffffff;
+    /* couleur des textes dans le dropdown*/
+     --bs-menu-item-color:#7b8190;
+
+}
+
+
+

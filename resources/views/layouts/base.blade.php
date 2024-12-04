@@ -36,6 +36,7 @@
 
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/customisation.css') }}">
 
 
 </head>
@@ -49,8 +50,10 @@
         
 
     </div>
+<!-- Bootstrap Bundle (inclut Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
 
     <script src="{{ asset('assets/libs/metismenujs/metismenujs.min.js') }}"></script>
 
