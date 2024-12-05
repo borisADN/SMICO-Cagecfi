@@ -6,38 +6,36 @@
 <br><br><br><br>
 
    
-    {{-- <img src="https://cdn.pixabay.com/photo/2024/04/05/05/17/business-8676549_1280.jpg" alt="" width="100%"> --}}
+    
     <div class="main-content">
-        {{-- <div class="col-xl-6 col-lg-6"> --}}
+  
             <div class="card">
                 <div class="card-body">
-                    {{-- <div class="justify-content-between d-flex align-items-center mb-4">
-                        <h4 class="card-title">Carousel with Slides Only</h4>
-                    </div> --}}
+                
                     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel"
                         data-bs-interval="3000">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active">
                                 <img src="{{ asset('assets/images/personnalisation/1.jpg') }}" alt="" width="100%" height="500px">
-                                {{-- <img class="d-block img-fluid mx-auto" src="assets/images/small/img-1.jpg" --}}
+                                
                                  
                             </div>
                             <div class="carousel-item">
                                 <img src="{{ asset('assets/images/personnalisation/2.jpg') }}" alt="" width="100%" height="500px">
-                                {{-- <img class="d-block img-fluid mx-auto" src="assets/images/small/img-2.jpg" --}}
+                             
                              
                             </div>
                             <div class="carousel-item">
                                 <img src="{{ asset('assets/images/personnalisation/3.jpg') }}" alt="" width="100%" height="500px">
-                                {{-- <img class="d-block img-fluid mx-auto" src="assets/images/small/img-3.jpg" --}}
+                                
                          
                             </div>
                         </div>
                     </div>
-                </div><!-- end card body -->
-            {{-- </div> --}}
-            <!-- end card -->
-        </div><!-- end col -->
+                </div>
+        
+          
+        </div>
         @include('includes.footer')
     </div>
    

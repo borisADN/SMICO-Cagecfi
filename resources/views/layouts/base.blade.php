@@ -4,13 +4,13 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Cagecfi | Vuesy</title>
+    <title>SMICO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
     <!-- App favicon -->
     {{-- Cette partie sera personalisable! --}}
-    {{-- <link rel="shortcut icon" href="assets/images/favicon.ico"> --}}
+    <link rel="shortcut icon" href="{{ asset('assets/images/personnalisation/favicon.png') }}">
 
     <!-- plugin css -->
     <link href="{{ asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -21,10 +21,13 @@
 
     <!-- Bootstrap Css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-
+    
     <!-- Icons Css -->
     <!-- CDN Font Awesome -->
+    <link href="{{ asset('assets/css/boxicons.min.css') }}"  rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <link href="{{ asset('assets/css/materialdesignicons.css') }}"  rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css"
         rel="stylesheet">
 
@@ -44,14 +47,14 @@
 
 <body data-layout="horizontal" data-topbar="dark">
     <div id="layout-wrapper">
-        
+
         {{-- Le contenu de la page sera affiché ici --}}
         @yield('content')
-        
+
 
     </div>
-<!-- Bootstrap Bundle (inclut Popper.js) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Bundle (inclut Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
     {{-- <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
 
@@ -73,6 +76,8 @@
     <script src="{{ asset('assets/libs/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+
+    <script src="{{ asset('assets/js/lang.js') }}"></script>
 
 </body>
 
