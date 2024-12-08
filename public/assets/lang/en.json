@@ -1,3 +1,16 @@
 {
-    "t-dashboard": "Dashboard"
+    "t-dashboard": "Dashboard",
+    "t-credit1": "Amortization table",
+    "t-credit2": "Repayment Schedule",
+    "t-credit3": "Amortization Table Simulation",
+    "t-credit4": "Credit Request",
+
+    "t-operation1": "Transfer between my accounts",
+    "t-operation2": "Transfer to other CDC accounts",
+    "t-operation3": "CDC Deposit via mobile money",
+    "t-operation4": "CDC Withdrawal via mobile money"
+
+   
+
+
 }

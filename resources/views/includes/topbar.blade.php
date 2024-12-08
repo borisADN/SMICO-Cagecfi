@@ -6,7 +6,7 @@
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/images/personnalisation/_logo.png') }}" alt="xxkxk" height="26">
+                        <img src="{{ asset('assets/images/personnalisation/_logo.png') }}" " height="26">
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('assets/images/personnalisation/_logo.png') }}" alt=""
@@ -65,17 +65,17 @@
                                                         <div class="col-lg-5">
                                                             <div>
                                                                 <a href="ui-modals.html" class="dropdown-item"
-                                                                    data-key="t-modals">Tableau d'ammortissement</a>
+                                                                    data-key="t-credit1">Tableau d'ammortissement</a>
 
                                                                 <a href="ui-modals.html" class="dropdown-item"
-                                                                    data-key="t-modals">Situation Des Remboursements</a>
+                                                                    data-key="t-credit2">Situation Des Remboursements</a>
 
                                                                 <a href="ui-modals.html" class="dropdown-item"
-                                                                    data-key="t-modals">simulation Tableau
+                                                                    data-key="t-credit3">simulation Tableau
                                                                     D'ammortissement</a>
 
                                                                 <a href="ui-modals.html" class="dropdown-item"
-                                                                    data-key="t-modals">Demande De Credit</a>
+                                                                    data-key="t-credit4">Demande De Credit</a>
 
                                                             </div>
                                                         </div>
@@ -117,17 +117,17 @@
                                 </a>
                                 {{-- Le dropdown --}}
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
-
-                                    <a href="{{ route('form1') }}" class="dropdown-item" data-key="t-gallery">Transert
+                                    <div class="menu-title">Operations</div>
+                                    <a href="{{ route('form1') }}" class="dropdown-item" data-key="t-operation1">Transert
                                         entre mes comptes</a>
 
-                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-gallery">Virement
+                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-operation2">Virement
                                         vers autres comptes CDC</a>
 
-                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-gallery">Depot CDC
+                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-operation3">Depot CDC
                                         via mobile money</a>
 
-                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-gallery">Retrait
+                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-operation4">Retrait
                                         CDC via mobile money</a>
 
 

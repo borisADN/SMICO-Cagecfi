@@ -10,7 +10,22 @@
     /* couleur des textes dans le dropdown*/
      --bs-menu-item-color:#7b8190;
 
+     --bs-navbar-hover-color:var(--bs-footer-bg);
+
 }
 
+/* Pour modifier la hauteur de la barre de navigation
+app.min.css
+.navbar-header{
+    height: ?;
+}
+*/
+
+/* Pour modifier la hauteur du footer
+app.min.css
+.footer{
+    height: ?;
+}
+*/
 
 
