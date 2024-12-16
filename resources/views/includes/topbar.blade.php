@@ -6,7 +6,7 @@
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/images/personnalisation/_logo.png') }}" " height="26">
+                        <img src="{{ asset('assets/images/personnalisation/_logo.png') }}" height="26">
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('assets/images/personnalisation/_logo.png') }}" alt=""
@@ -46,14 +46,70 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item dropdown">
+                            @php
+                                // Charger le fichier JSON
+                                $menuPath = public_path('assets/json/menu.json'); // Chemin du fichier JSON
+
+                                $menuJson = file_get_contents($menuPath);
+                                // Cette fonction PHP permet de lire le contenu d'un fichier et de le retourner sous forme de chaîne de caractères
+
+$menus = json_decode($menuJson, true); // Convertir en tableau PHP
+
+// Récupérer uniquement la section "Credit"
+$creditMenu = $menus['menu']['LDCredit'] ?? null;
+                            @endphp
+
+                            @if ($creditMenu)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-credit"
+                                        role="button" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="bx bx-money"></i>
+                                        <span data-key="t-elements">Credit</span>
+                                        <!-- <span>{{ $creditMenu['libMenu'] }}</span> -->
+                                        <div class="arrow-down"></div>
+                                    </a>
+                                    {{-- le dropdown --}}
+                                    <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl"
+                                        aria-labelledby="topnav-credit">
+                                        <div class="ps-2 p-lg-0">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div>
+                                                        <div class="menu-title">Credit</div>
+                                                        <div class="row g-0">
+                                                            <div class="col-lg-5">
+                                                                <div>
+                                                                    @foreach ($creditMenu['optionsMenu'] as $option)
+                                                                        <a href="{{ $option['urlParam'] }}"
+                                                                            class="dropdown-item"
+                                                                            data-key="{{ $option['dataKey'] }}">
+                                                                            {{ $option['libOption'] }}
+                                                                        </a>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+
+                            {{-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement"
                                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="bx bx-money"></i>
                                     <span data-key="t-elements">Credit</span>
                                     <div class="arrow-down"></div>
                                 </a>
-                                {{-- le dropdown --}}
+                      
+                                <!-- le dropdown -->
                                 <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl"
                                     aria-labelledby="topnav-uielement">
                                     <div class="ps-2 p-lg-0">
@@ -83,29 +139,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4">
-                                                <div>
-                                                    {{-- <div class="menu-title">Extended</div> --}}
-                                                    <div>
-                                                        {{-- <a href="extended-lightbox.html" class="dropdown-item"
-                                                            data-key="t-lightbox">Lightbox</a>
-                                                        <a href="extended-rangeslider.html" class="dropdown-item"
-                                                            data-key="t-range-slider">Range Slider</a>
-                                                        <a href="extended-sweet-alert.html" class="dropdown-item"
-                                                            data-key="t-sweet-alert">SweetAlert 2</a>
-                                                        <a href="extended-rating.html" class="dropdown-item"
-                                                            data-key="t-rating">Rating</a>
-                                                        <a href="extended-notifications.html" class="dropdown-item"
-                                                            data-key="t-notifications">Notifications</a>
-                                                        <a href="extended-swiperslider.html" class="dropdown-item"
-                                                            data-key="t-swiperslider">Swiper Slider</a> --}}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                         
                                         </div>
                                     </div>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages"
@@ -118,18 +156,17 @@
                                 {{-- Le dropdown --}}
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
                                     <div class="menu-title">Operations</div>
-                                    <a href="{{ route('form1') }}" class="dropdown-item" data-key="t-operation1">Transert
+
+                                    <a href="{{ route('form1') }}" class="dropdown-item"
+                                        data-key="t-operation1">Transert
                                         entre mes comptes</a>
 
-                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-operation2">Virement
-                                        vers autres comptes CDC</a>
+                                    <a href="{{ route('form2') }}" class="dropdown-item">Virement
+                                        vers autres comptes {{ env('SOCIETY_NAME') }}</a>
 
-                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-operation3">Depot CDC
-                                        via mobile money</a>
-
-                                    <a href="apps-gallery.html" class="dropdown-item" data-key="t-operation4">Retrait
-                                        CDC via mobile money</a>
-
+                                        <a href="{{ route('form3') }}" class="dropdown-item">Depot {{ env('SOCIETY_NAME') }} via mobile money</a>
+                                        
+       <a href="{{ route('form4') }}" class="dropdown-item">Retrait {{ env('SOCIETY_NAME') }} via mobile money</a>
 
 
                                 </div>
@@ -148,8 +185,8 @@
 
 
             <div class="dropdown d-inline-block language-switch">
-                <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <img id="header-lang-img" src="https://flagcdn.com/w20/fr.png"
                         srcset="https://flagcdn.com/w40/fr.png 2x" width="20" alt="France">
                 </button>
@@ -221,6 +258,7 @@
     </div>
 
     <div class="collapse show dash-content" id="dashtoggle">
+
         {{-- =========================================== --}}
         {{-- <div class="container-fluid">
         <!-- start page title -->

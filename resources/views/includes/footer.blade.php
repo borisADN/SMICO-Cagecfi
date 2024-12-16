@@ -1,4 +1,4 @@
-<footer class="footer fixed-bottom">
+<footer class="footer fixed-bottom custom-footer" >
     <div class="container-fluid ">
         <div class="row">
             <div class="col-sm-6">

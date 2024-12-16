@@ -2,14 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get("/", function () {
+    return view("temporary.login");
+});
+
+Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/form1', function () {
-    return view('form1');
-})->name('form1');
 
 
-// route::view('', 'register');
-
+// Routes temporaires
+route::view('login', 'temporary.login');
+route::view('/form1', 'form1')->name('form1');
+route::view('/form2', 'form2')->name('form2');
+route::view('/form3', 'form3')->name('form3');
+route::view('/form4', 'form4')->name('form4');

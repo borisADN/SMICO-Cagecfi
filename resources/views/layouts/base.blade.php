@@ -40,7 +40,7 @@
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('assets/css/customisation.css') }}">
-
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 </head>
 
@@ -60,12 +60,12 @@
 
     <script src="{{ asset('assets/libs/metismenujs/metismenujs.min.js') }}"></script>
 
-    <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script> --}}
 
     <script src="{{ asset('assets/libs/feather-icons/feather.min.js') }}"></script>
 
     <!-- apexcharts -->
-    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
 
     <!-- Vector map-->
 
@@ -74,7 +74,7 @@
 
     <!-- swiper js -->
     <script src="{{ asset('assets/libs/swiper/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script> --}}
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
     <script src="{{ asset('assets/js/lang.js') }}"></script>

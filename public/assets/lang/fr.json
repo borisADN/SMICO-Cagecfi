@@ -1,5 +1,22 @@
 {
     "t-dashboard": "Accueil",
-    "t-credit1": "Accueil"
-    
+    "t-credit1": "Tableau d'ammortissement",
+    "t-credit2": "Situation Des Remboursements",
+    "t-credit3": "simulation Tableau D'ammortissement",
+    "t-credit4": "Demande De Credit",
+
+    "t-operation1": "Transert entre mes comptes",
+    "t-operation2": "Virement vers autres comptes CDC",
+    "t-operation3": "Depot CDC via mobile money",
+    "t-operation4": "Retrait CDC via mobile money",
+
+    "t-login1": "Bienvenue!",
+    "t-login2": "Connectez-vous pour continuer",
+    "t-login3": "Identifiant",
+    "t-login4": "Mot de Passe",
+    "t-login5": "Mot de passe oublie?",
+    "t-login6": "Rester connecté",
+    "t-login7": "Se Connecter",
+    "t-login8": "Changer de langue"
+  
 }

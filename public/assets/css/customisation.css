@@ -13,6 +13,30 @@
      --bs-navbar-hover-color:var(--bs-footer-bg);
 
 }
+.custom-card{
+    margin: auto;
+    width: 60%;
+}
+
+.custom-footer {
+    background: rgba(52, 253, 41, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+    border-radius: 10px;
+}
+
+/* Arriere plan de la page de connexion */
+
+.bg-overlay-gradient{
+  /* background: radial-gradient(at 50% -20%, #3f1e59, #311748) fixed; */
+  background: #fcb43c;
+}
+
+/* Parametrer la couleur de fond et du texte des boutons */
+.btn-primary{
+    background-color: #244c74;
+}
 
 /* Pour modifier la hauteur de la barre de navigation
 app.min.css
@@ -27,5 +51,8 @@ app.min.css
     height: ?;
 }
 */
+
+/* 
+Nom de l'entreprise parametrable dans le fichier .env  {{env('SOCIETY_NAME')}}*/
 
 

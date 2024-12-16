@@ -1,0 +1,113 @@
+SCRIPT JAVASCRIPT PERMETTANT LA TRADUCTION DE LA PAGE WEB EN TEMPS RÉEL
+(function() {
+    "use strict";
+
+    // Langue par défaut (français)
+    const defaultLanguage = "fr";
+    let currentLanguage = localStorage.getItem("language") || defaultLanguage;
+
+    // Changer le drapeau en fonction de la langue
+    function updateFlag(language) {
+        const flagImg = document.getElementById("header-lang-img");
+        const flagMap = {
+            fr: "https://flagcdn.com/w20/fr.png",
+            en: "https://flagcdn.com/w20/us.png"
+        };
+        if (flagImg) {
+            flagImg.src = flagMap[language] || flagMap.fr;  // Default to French flag if language not found
+        }
+    }
+
+    // Charger et appliquer les traductions
+    function loadLanguage(language) {
+        fetch(`/assets/lang/${language}.json`)
+            .then(response => response.json())
+            .then(translations => {
+                Object.keys(translations).forEach(key => {
+                    const elements = document.querySelectorAll(`[data-key='${key}']`);
+                    elements.forEach(element => {
+                        element.textContent = translations[key];
+                    });
+                });
+            });
+    }
+=========================================================
+La fonction loadLanguage est conçue pour charger un fichier de traduction (au format JSON) en fonction de la langue choisie et mettre à jour le texte sur la page avec les traductions correspondantes. Voici une explication plus détaillée de chaque étape :
+
+Récupération du fichier JSON de traduction :
+fetch('/assets/lang/${language}.json')
+Cette ligne envoie une requête HTTP pour récupérer un fichier JSON de traduction spécifique en fonction de la langue passée en argument (language). Par exemple, si la langue est "fr", le fichier /assets/lang/fr.json sera chargé.
+
+Conversion de la réponse en JSON :
+.then(response => response.json())
+Lorsque le fichier est récupéré, il est converti en objet JavaScript grâce à .json(), ce qui permet d'interagir facilement avec les données.
+
+Traitement des traductions :
+.then(translations => { ... })
+Une fois que le JSON est converti, la fonction de traitement des traductions est exécutée. Le fichier JSON contient des paires clé-valeur où chaque clé est un identifiant unique (comme t-credit1) et chaque valeur est la traduction correspondante dans la langue sélectionnée.
+
+Mise à jour du texte sur la page :
+Object.keys(translations).forEach(key => { ... })
+Cette ligne parcourt toutes les clés du fichier JSON (par exemple, t-credit1, t-credit2, etc.). Pour chaque clé, elle cherche tous les éléments de la page qui ont un attribut data-key correspondant à cette clé.
+
+Modification du contenu des éléments :
+const elements = document.querySelectorAll(\[data-key='${key}']`); Ici, on utilisequerySelectorAllpour sélectionner tous les éléments HTML qui possèdent l'attributdata-key` correspondant à la clé actuelle. Cela permet de cibler les éléments spécifiques qui doivent être traduits.
+
+elements.forEach(element => { element.textContent = translations[key]; });
+Cette ligne remplace le texte de chaque élément sélectionné par la traduction correspondante dans le fichier JSON.
+
+En résumé, la fonction loadLanguage récupère les traductions d'un fichier JSON et met à jour automatiquement le texte des éléments HTML en fonction de la langue choisie. Cela simplifie le processus de gestion des langues dans une application web.
+
+==========================================================
+    // Sauvegarder la langue et mettre à jour le drapeau
+    function setLanguage(language) {
+        localStorage.setItem("language", language);
+        currentLanguage = language;
+        updateFlag(language);
+        loadLanguage(language);
+    }
+
+    // Initialisation au chargement de la page
+    window.onload = () => {
+        updateFlag(currentLanguage);
+        loadLanguage(currentLanguage);
+    };
+
+    
+
+    // Écouter les clics sur les éléments de la langue
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".language").forEach(item => {
+            item.addEventListener("click", () => setLanguage(item.getAttribute("data-lang")));
+        });
+    });
+
+===========================================================
+La fonction loadLanguage est conçue pour charger un fichier de traduction (au format JSON) en fonction de la langue choisie et mettre à jour le texte sur la page avec les traductions correspondantes. Voici une explication plus détaillée de chaque étape :
+
+Récupération du fichier JSON de traduction :
+fetch('/assets/lang/${language}.json')
+Cette ligne envoie une requête HTTP pour récupérer un fichier JSON de traduction spécifique en fonction de la langue passée en argument (language). Par exemple, si la langue est "fr", le fichier /assets/lang/fr.json sera chargé.
+
+Conversion de la réponse en JSON :
+.then(response => response.json())
+Lorsque le fichier est récupéré, il est converti en objet JavaScript grâce à .json(), ce qui permet d'interagir facilement avec les données.
+
+Traitement des traductions :
+.then(translations => { ... })
+Une fois que le JSON est converti, la fonction de traitement des traductions est exécutée. Le fichier JSON contient des paires clé-valeur où chaque clé est un identifiant unique (comme t-credit1) et chaque valeur est la traduction correspondante dans la langue sélectionnée.
+
+Mise à jour du texte sur la page :
+Object.keys(translations).forEach(key => { ... })
+Cette ligne parcourt toutes les clés du fichier JSON (par exemple, t-credit1, t-credit2, etc.). Pour chaque clé, elle cherche tous les éléments de la page qui ont un attribut data-key correspondant à cette clé.
+
+Modification du contenu des éléments :
+const elements = document.querySelectorAll(\[data-key='${key}']`); Ici, on utilisequerySelectorAllpour sélectionner tous les éléments HTML qui possèdent l'attributdata-key` correspondant à la clé actuelle. Cela permet de cibler les éléments spécifiques qui doivent être traduits.
+
+elements.forEach(element => { element.textContent = translations[key]; });
+Cette ligne remplace le texte de chaque élément sélectionné par la traduction correspondante dans le fichier JSON.
+
+En résumé, la fonction loadLanguage récupère les traductions d'un fichier JSON et met à jour automatiquement le texte des éléments HTML en fonction de la langue choisie. Cela simplifie le processus de gestion des langues dans une application web.
+======================================================
+
+})();

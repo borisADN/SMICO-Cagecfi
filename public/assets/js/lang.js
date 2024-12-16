@@ -1,68 +1,63 @@
-!function() {
-    "use strict";
-    var e, t, n, a, o = localStorage.getItem("language"), s = "fr";  // Langue par défaut est le français
+(function() {
+    "use strict"; // Active le mode strict pour éviter certaines erreurs courantes
 
-    // Fonction pour changer la langue et l'image du drapeau
-    function l(e) {
-        // Mise à jour de l'image du drapeau
-        var flagImg = document.getElementById("header-lang-img");
+    // Langue par défaut (français)
+    const defaultLanguage = "fr";
+    // Récupère la langue actuelle depuis le localStorage ou utilise la langue par défaut
+    let currentLanguage = localStorage.getItem("language") || defaultLanguage;
 
+    // Fonction pour mettre à jour l'image du drapeau en fonction de la langue choisie
+    const updateFlag = (language) => {
+        const flagImg = document.getElementById("header-lang-img"); // Sélectionne l'élément image du drapeau
         if (flagImg) {
-            if (e === "fr") {
-                flagImg.src = "https://flagcdn.com/w20/fr.png";  // Drapeau de la France
-            } else if (e === "en") {
-                flagImg.src = "https://flagcdn.com/w20/us.png";  // Drapeau des États-Unis
-            } else if (e === "es") {
-                flagImg.src = "https://flagcdn.com/w20/es.png";  // Drapeau de l'Espagne
-            } else if (e === "de") {
-                flagImg.src = "https://flagcdn.com/w20/de.png";  // Drapeau de l'Allemagne
-            } else if (e === "it") {
-                flagImg.src = "https://flagcdn.com/w20/it.png";  // Drapeau de l'Italie
-            }
-        }
-
-        // Sauvegarder la langue dans localStorage
-        localStorage.setItem("language", e);
-        o = localStorage.getItem("language");
-
-        // Charger le fichier de traduction correspondant à la langue sélectionnée
-        function loadLanguage() {
-            var e = new XMLHttpRequest();
-            e.open("GET", "/assets/lang/" + o + ".json", true);
-            e.onreadystatechange = function() {
-                var n;
-                if (e.readyState === 4 && e.status === 200) {
-                    n = JSON.parse(e.responseText);
-                    Object.keys(n).forEach(function(t) {
-                        document.querySelectorAll("[data-key='" + t + "']").forEach(function(e) {
-                            e.textContent = n[t];
-                        });
-                    });
-                }
+            // Map des langues aux URL des drapeaux
+            const flagMap = {
+                fr: "https://flagcdn.com/w20/fr.png", // Drapeau français
+                en: "https://flagcdn.com/w20/us.png", // Drapeau anglais
             };
-            e.send();
-        }
-
-        loadLanguage();
-    }
-
-    // Lors du chargement de la page, vérifier si une langue est définie
-    window.onload = function() {
-        if (!o) {
-            l(s);  // Si aucune langue n'est définie, charger la langue par défaut (français)
-        } else {
-            l(o);
+            // Met à jour la source de l'image du drapeau ou utilise le drapeau français par défaut
+            flagImg.src = flagMap[language] || flagMap.fr;
         }
     };
 
-    // Lors de l'interaction avec les éléments de la liste des langues, changer la langue et le drapeau
-    document.addEventListener("DOMContentLoaded", function() {
-        var languageItems = document.querySelectorAll(".language");
-        languageItems.forEach(function(t) {
-            t.addEventListener("click", function() {
-                l(t.getAttribute("data-lang"));
+    // Fonction pour charger les traductions depuis un fichier JSON
+    const loadLanguage = async (language) => {
+        try {
+            // Récupère le fichier de traduction correspondant à la langue choisie
+            const response = await fetch(`/assets/lang/${language}.json`);
+            if (!response.ok) throw new Error('Erreur réseau'); // Vérifie si la réponse est correcte
+            const translations = await response.json(); // Convertit la réponse en JSON
+            
+            // Met à jour le contenu des éléments HTML en fonction des traductions
+            Object.keys(translations).forEach(key => {
+                document.querySelectorAll(`[data-key='${key}']`).forEach(element => {
+                    element.textContent = translations[key]; // Met à jour le texte de chaque élément
+                });
             });
+        } catch (error) {
+            console.error('Erreur lors du chargement de la langue :', error); // Affiche une erreur en cas de problème
+        }
+    };
+
+    // Fonction pour définir la langue choisie par l'utilisateur
+    const setLanguage = (language) => {
+        localStorage.setItem("language", language); // Sauvegarde la langue choisie dans le localStorage
+        currentLanguage = language; // Met à jour la langue actuelle
+        updateFlag(language); // Met à jour le drapeau
+        loadLanguage(language); // Charge les traductions pour la langue choisie
+    };
+
+    // Initialisation au chargement de la page
+    window.onload = () => {
+        updateFlag(currentLanguage); // Met à jour le drapeau selon la langue actuelle
+        loadLanguage(currentLanguage); // Charge les traductions pour la langue actuelle
+    };
+
+    // Écouteur d'événements pour les clics sur les éléments de langue
+    document.addEventListener("DOMContentLoaded", () => {
+        // Sélectionne tous les éléments avec la classe "language" et ajoute un écouteur d'événements
+        document.querySelectorAll(".language").forEach(item => {
+            item.addEventListener("click", () => setLanguage(item.getAttribute("data-lang"))); // Change la langue au clic
         });
     });
-
-}();
+})();

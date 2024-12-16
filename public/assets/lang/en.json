@@ -8,9 +8,14 @@
     "t-operation1": "Transfer between my accounts",
     "t-operation2": "Transfer to other CDC accounts",
     "t-operation3": "CDC Deposit via mobile money",
-    "t-operation4": "CDC Withdrawal via mobile money"
+    "t-operation4": "CDC Withdrawal via mobile money",
 
-   
-
-
+    "t-login1": "Welcome Back!",
+    "t-login2": "Log in to continue",
+    "t-login3": "Username",
+    "t-login4": "Password",
+    "t-login5": "Forgot Password?",
+    "t-login6": "Remember Me",
+    "t-login7": "Log In",
+    "t-login8": "Change Language"
 }

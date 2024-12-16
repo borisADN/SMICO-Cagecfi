@@ -1,0 +1,142 @@
+{
+	"menu" : {
+
+        
+		"myAccount":{
+			"libMenu" : "LDMyAccount",
+			"iconMenu" : "",
+			"optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDSituation", "numOption" : "WC01", "urlParam" : "situationCpte"},
+                            {"icon" : "", "libOption" : "LDReleve", "numOption" : "WC05", "urlParam" : "releve"},
+                            {"icon" : "", "libOption" : "LDHistory", "numOption" : "WC06", "urlParam" : "history"},
+                            {"icon" : "", "libOption" : "LDRemiseChq", "numOption" : "WC11", "urlParam" : "remiseChq"},
+                            {"icon" : "", "libOption" : "LDdeviseCours", "numOption" : "WC09", "urlParam" : "deviseCours"},
+                            {"icon" : "", "libOption" : "LDSituation", "numOption" : "WA04", "urlParam" : "situationCpte"},
+                            {"icon" : "", "libOption" : "LDReleve", "numOption" : "WA04", "urlParam" : "releve"}
+			]
+		},
+		"LDCredit":{
+			"libMenu" : "Credit",
+                        "iconMenu" : "",
+			"optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDTabAmort", "numOption" : "WC07", "urlParam" : "tabAmort","dataKey": "t-credit1"},
+                            {"icon" : "", "libOption" : "LDSituationRemb", "numOption" : "WC08", "urlParam" : "situationRemb","dataKey": "t-credit2"},
+                            {"icon" : "", "libOption" : "LDSimulTabAmort", "numOption" : "WC16", "urlParam" : "simulTabAmort","dataKey": "t-credit3"},
+                            {"icon" : "", "libOption" : "LDAskCredit", "numOption" : "WC15", "urlParam" : "askCredit","dataKey": "t-credit4"}
+			]
+		},
+		"LDOperation":{
+			"libMenu" : "LDOperation",
+                        "iconMenu" : "",
+			"optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDRetraitCpte", "numOption" : "WC17", "urlParam" : "retraitInitieCpte"},
+                            {"icon" : "", "libOption" : "LDMiseDispo", "numOption" : "WC18", "urlParam" : "miseDispo"},                            
+                            {"icon" : "", "libOption" : "LDAnnulMiseDispo", "numOption" : "WC19", "urlParam" : "annulMiseDispo"},
+                            {"icon" : "", "libOption" : "LDReglFact", "numOption" : "WC20", "urlParam" : "reglFact"},
+                            {"icon" : "", "libOption" : "LDReglAchat", "numOption" : "WC21", "urlParam" : "reglAchat"},
+                            {"icon" : "", "libOption" : "LDTrsftCpte", "numOption" : "WC22", "urlParam" : "trsftCpte"},
+                            {"icon" : "", "libOption" : "LDViremtCpte", "numOption" : "WC23", "urlParam" : "viremtCpte"},
+                            {"icon" : "", "libOption" : "LDDemandeChqier", "numOption" : "WC24", "urlParam" : "demandeChequier"},
+                            {"icon" : "", "libOption" : "LDDemandeDecvt", "numOption" : "WC13", "urlParam" : "demandeDecvt"},
+                            {"icon" : "", "libOption" : "LDDemandeSvce", "numOption" : "WC27", "urlParam" : "demandeSvce"},
+                            {"icon" : "", "libOption" : "LDListDemandeSvce", "numOption" : "WC28", "urlParam" : "listDemandeSvce"},
+                            {"icon" : "", "libOption" : "LDSrechargCarte", "numOption" : "WC30", "urlParam" : "rechargCarte"},
+                            {"icon" : "", "libOption" : "LDWalletToBank", "numOption" : "WC32", "urlParam" : "w2bTransaction"},
+                            {"icon" : "", "libOption" : "LDBankToWallet", "numOption" : "WC33", "urlParam" : "b2wTransaction"},
+                            {"icon" : "", "libOption" : "LDAirtime", "numOption" : "WC27", "urlParam" : "airtime"},
+                            {"icon" : "", "libOption" : "LDAccountOpening", "numOption" : "WC34", "urlParam" : "accountOpening"},
+                            
+                            
+                            {"icon" : "", "libOption" : "LDDemandeSvce", "numOption" : "WA37", "urlParam" : "demandeSvce"},
+                            
+                            {"icon" : "", "libOption" : "LDCashTocash", "numOption" : "WA16", "urlParam" : "waCashTocash"},  
+                            {"icon" : "", "libOption" : "LDRetraitMiseADispo", "numOption" : "WA17", "urlParam" : "waRetraitMiseADispo"},
+                            {"icon" : "", "libOption" : "LDReglFact", "numOption" : "WA13", "urlParam" : "reglFact"},
+                            {"icon" : "", "libOption" : "LDReglAchat", "numOption" : "WA13", "urlParam" : "reglAchat"},  
+                            {"icon" : "", "libOption" : "LDSrechargCarte", "numOption" : "WA41", "urlParam" : "rechargCarte"},
+                            {"icon" : "", "libOption" : "LDSituationDmdService", "numOption" : "WA38", "urlParam" : "waSituationDmdServiceList"},
+                            {"icon" : "", "libOption" : "LDAccountOpening", "numOption" : "WA54", "urlParam" : "waAccountOpening"}
+                            
+
+			]                        
+		},
+                "LDCustomer":{
+			"libMenu" : "LDCustomer",
+                        "iconMenu" : "",
+			"optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDDepotCpte", "numOption" : "WA01", "urlParam" : "waDepotClt"},
+                            {"icon" : "", "libOption" : "LDRetraitCpte", "numOption" : "WA02", "urlParam" : "waRetraitClt"},  
+                            {"icon" : "", "libOption" : "LDRechargeCartesPrepayees", "numOption" : "WA46", "urlParam" : "waRechargeCartesPrepayees"},
+                            {"icon" : "", "libOption" : "LDPaiementPartenaire", "numOption" : "WA13", "urlParam" : "waPaiementPartenaire"},
+                            {"icon" : "", "libOption" : "LDTransfertCpteClient", "numOption" : "WA19", "urlParam" : "waTransfertCpteClient"},
+                            {"icon" : "", "libOption" : "LDSituationCpteClt", "numOption" : "WA05", "urlParam" : "waSituationCpteClt"},
+                            {"icon" : "", "libOption" : "LDReleveCpteClt", "numOption" : "WA06", "urlParam" : "waReleveCpteClt"},
+                            {"icon" : "", "libOption" : "LDTabAmortClt", "numOption" : "WA07", "urlParam" : "waTabAmortClt"},
+                            {"icon" : "", "libOption" : "LDTabRembClt", "numOption" : "WA08", "urlParam" : "waTabRembClt"},                            
+                            {"icon" : "", "libOption" : "LDdemandeService", "numOption" : "WA37", "urlParam" : "wademandeService"},
+                            {"icon" : "", "libOption" : "LDBordereauReedition", "numOption" : "WA14", "urlParam" : "waBordereauReedition"},
+                            {"icon" : "", "libOption" : "LDActivationClt", "numOption" : "WA39", "urlParam" : "waActivationClt"},
+                            {"icon" : "", "libOption" : "LDCustomerAdhesion", "numOption" : "WA47", "urlParam" : "waCustomerAdhesion"},
+                            {"icon" : "", "libOption" : "LDGroupAdhesion", "numOption" : "WA48", "urlParam" : "waGroupAdhesion"},
+                            {"icon" : "", "libOption" : "LDProspectCreation", "numOption" : "WA49", "urlParam" : "waProspectCreation"},
+                            {"icon" : "", "libOption" : "LDSearchCustomer", "numOption" : "WA51", "urlParam" : "searchCustomer"}
+			]                        
+		},
+		"LDFundTransfer":{
+			"libMenu" : "LDFundTransfer",
+                        "iconMenu" : "",
+			"optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDTransfertArgentEnvoi", "numOption" : "WA40", "urlParam" : "waTransfertArgentEnvoi"},                           
+                            {"icon" : "", "libOption" : "LDTransfertArgentReception", "numOption" : "WA42", "urlParam" : "waTransfertArgentReception"},
+                            {"icon" : "", "libOption" : "LDTransfertArgentModification", "numOption" : "_WA43", "urlParam" : "waTransfertArgentModification"},
+                            {"icon" : "", "libOption" : "LDTransfertArgentListe", "numOption" : "WA44", "urlParam" : "waTransfertArgentListe"},
+                            {"icon" : "", "libOption" : "LDTransfertArgentAnnulation", "numOption" : "_WA45", "urlParam" : "waTransfertArgentAnnulation"}
+			]                        
+		},
+                "LDTontine":{
+                        "libMenu" : "LDTontine",
+                        "iconMenu" : "",
+                        "optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDAdhesionTontine", "numOption" : "WA51", "urlParam" : "tonAdhesion"},
+                            {"icon" : "", "libOption" : "LDDepotTontine", "numOption" : "WA52", "urlParam" : "tonDepot"},
+                            {"icon" : "", "libOption" : "LDOuvertureCycleTontine", "numOption" : "WA53", "urlParam" : "tonOuvertureCycle"}
+                        ]
+                },
+		"LDReporting":{
+			"libMenu" : "LDReporting",
+                        "iconMenu" : "",
+			"optionsMenu" :[
+                            {"icon" : "", "libOption" : "LDBrouillard", "numOption" : "WA09", "urlParam" : "waBrouillard"},
+                            {"icon" : "", "libOption" : "LDSituationCommission", "numOption" : "WA36", "urlParam" : "waSituationCommission"}
+			]                        
+		},
+		"LDContactUs":{
+			"libMenu" : "LDContactUs",
+                        "iconMenu" : "",
+			"optionsMenu" :[
+			{"icon" : "", "libOption" : "LDAgency", "numOption" : "WC10", "urlParam" : "agency"},
+			{"icon" : "", "libOption" : "LDSendMail", "numOption" : "WC04", "urlParam" : "sendMail"},
+			{"icon" : "", "libOption" : "LDSearchPartner", "numOption" : "WC25", "urlParam" : "searchPartner"},
+			{"icon" : "", "libOption" : "LDSearchAgent", "numOption" : "WC31", "urlParam" : "searchAgent"}
+			]
+		},
+		"LDSpace":{
+			"libMenu" : "LDSpace",
+                        "iconMenu" : "fas fa-user-circle",
+			"optionsMenu" :[
+			{"icon" : "", "libOption" : "LDClientInfo", "numOption" : "WC03", "urlParam" : "infoClient"},
+			{"icon" : "", "libOption" : "LDParrainage", "numOption" : "WC26", "urlParam" : "parrainage"},
+			{"icon" : "", "libOption" : "LDUpdatePass", "numOption" : "WC02", "urlParam" : "updatePass"},
+                        {"icon" : "", "libOption" : "LDUpdateAns", "numOption" : "WC12", "urlParam" : "updateAns"},
+                        {"icon" : "", "libOption" : "LDUpdatePin", "numOption" : "WC14", "urlParam" : "updatePin"},
+                        
+                        {"icon" : "", "libOption" : "LDClientInfo", "numOption" : "WA", "urlParam" : "infoClient"},
+			{"icon" : "", "libOption" : "LDParrainage", "numOption" : "WA", "urlParam" : "parrainage"},
+			{"icon" : "", "libOption" : "LDUpdatePass", "numOption" : "WA20", "urlParam" : "updatePass"},
+                        {"icon" : "", "libOption" : "LDUpdateAns", "numOption" : "WA11", "urlParam" : "updateAns"},
+                        {"icon" : "", "libOption" : "LDUpdatePin", "numOption" : "WA03", "urlParam" : "updatePin"},
+			{"icon" : "", "libOption" : "LDLogout", "numOption" : "", "urlParam" : "logout"}
+			]                        
+		}
+        }   
+}
