@@ -1,0 +1,84 @@
+[
+    {
+        "codeoption": "MC01"
+    },
+    {
+        "codeoption": "MC02"
+    },
+    {
+        "codeoption": "MC03"
+    },
+    {
+        "codeoption": "MC04"
+    },
+    {
+        "codeoption": "MC10"
+    },
+    {
+        "codeoption": "MC13"
+    },
+    {
+        "codeoption": "MC14"
+    },
+    {
+        "codeoption": "MC15"
+    },
+    {
+        "codeoption": "MC16"
+    },
+    {
+        "codeoption": "MC17"
+    },
+    {
+        "codeoption": "MC18"
+    },
+    {
+        "codeoption": "MC19"
+    },
+    {
+        "codeoption": "MC22"
+    },
+    {
+        "codeoption": "MC32"
+    },
+    {
+        "codeoption": "WC01"
+    },
+    {
+        "codeoption": "WC02"
+    },
+    {
+        "codeoption": "WC03"
+    },
+    {
+        "codeoption": "WC05"
+    },
+    {
+        "codeoption": "WC06"
+    },
+    {
+        "codeoption": "WC10"
+    },
+    {
+        "codeoption": "WC12"
+    },
+    {
+        "codeoption": "WC14"
+    },
+    {
+        "codeoption": "WC22"
+    },
+    {
+        "codeoption": "WC23"
+    },
+    {
+        "codeoption": "WC32"
+    },
+    {
+        "codeoption": "WC33"
+    }
+]
+
+
+
+

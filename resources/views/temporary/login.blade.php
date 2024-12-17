@@ -78,16 +78,19 @@
                                             <h5 class="mb-0" data-key="t-login1">Bienvenue!</h5>
                                             <p class="text-muted mt-2" data-key="t-login2">Connectez-vous pour continuer</p>
                                         </div>
-                                        <form class="mt-4 pt-2">
+                                        <form class="mt-4 pt-2" action="{{ route('login') }}" method="post">
+                                            @csrf
+                                            @method('POST')
                                             <div class="form-floating form-floating-custom mb-3">
-                                                <input type="text" class="form-control" id="input-username" placeholder="Enter User Name">
+
+                                                <input type="text" name="username" class="form-control" id="input-username" placeholder="Enter User Name">
                                                 <label for="input-username" data-key="t-login3">Identifiant</label>
                                                 <div class="form-floating-icon">
                                                     <i class="uil uil-users-alt"></i>
                                                 </div>
                                             </div>
                                             <div class="form-floating form-floating-custom mb-3 auth-pass-inputgroup">
-                                                <input type="password" class="form-control" id="password-input" placeholder="Enter Password">
+                                                <input type="password"name="psd" class="form-control" id="password-input" placeholder="Enter Password">
                                                 <button type="button" class="btn btn-link position-absolute h-100 end-0 top-0" id="password-addon">
                                                     <i class="mdi mdi-eye-outline font-size-18 text-muted"></i>
                                                 </button>
@@ -105,9 +108,9 @@
                                             </div>
         
                                             <div class="mt-3">
-                                                <a href="{{ route('home') }}"  class="btn btn-primary w-100" type="submit" data-key="t-login7">Se Connecter</a>
+                                                {{-- <a href="{{ route('home') }}"  class="btn btn-primary w-100" type="submit" data-key="t-login7">Se Connecter</a> --}}
                                                 <!-- Bootstrap Css -->
-                                                {{-- <button class="btn btn-primary w-100" type="submit" data-key="t-login7">Se Connecter</button> --}}
+                                                <button class="btn btn-primary w-100" type="submit" data-key="t-login7">Se Connecter</button>
                                             </div>
 
 

@@ -164,9 +164,11 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
                                     <a href="{{ route('form2') }}" class="dropdown-item">Virement
                                         vers autres comptes {{ env('SOCIETY_NAME') }}</a>
 
-                                        <a href="{{ route('form3') }}" class="dropdown-item">Depot {{ env('SOCIETY_NAME') }} via mobile money</a>
-                                        
-       <a href="{{ route('form4') }}" class="dropdown-item">Retrait {{ env('SOCIETY_NAME') }} via mobile money</a>
+                                    <a href="{{ route('form3') }}" class="dropdown-item">Depot
+                                        {{ env('SOCIETY_NAME') }} via mobile money</a>
+
+                                    <a href="{{ route('form4') }}" class="dropdown-item">Retrait
+                                        {{ env('SOCIETY_NAME') }} via mobile money</a>
 
 
                                 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", function () {
@@ -10,6 +11,7 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
+Route::post('/login', [ApiController::class, 'Apilogin'])->name('login');
 
 
 // Routes temporaires
