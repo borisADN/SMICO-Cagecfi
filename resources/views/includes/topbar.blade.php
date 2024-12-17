@@ -46,7 +46,28 @@
                                 </a>
                             </li>
 
-                            @php
+                            @foreach ($groupedOptions as $libMenu => $menuOptions)
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-{{ strtolower($libMenu) }}" role="button">
+                {{-- <i class="bx bx-refresh"></i> --}}
+                <span data-key="t-{{ strtolower($libMenu) }}">{{ $libMenu }}</span>
+                <div class="arrow-down"></div>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="topnav-{{ strtolower($libMenu) }}">
+                <div class="menu-title">{{ $libMenu }}</div>
+                @foreach ($menuOptions as $option)
+                <a href="" class="dropdown-item">
+                    {{ $option['libOption'] }}
+                </a>
+                    {{-- <a href="{{ route($option['urlParam']) }}" class="dropdown-item" data-key="t-{{ strtolower($option['libOption']) }}">
+                        {{ $option['libOption'] }}
+                    </a> --}}
+                @endforeach
+            </div>
+        </li>
+    @endforeach
+
+                            {{-- @php
                                 // Charger le fichier JSON
                                 $menuPath = public_path('assets/json/menu.json'); // Chemin du fichier JSON
 
@@ -57,9 +78,9 @@ $menus = json_decode($menuJson, true); // Convertir en tableau PHP
 
 // Récupérer uniquement la section "Credit"
 $creditMenu = $menus['menu']['LDCredit'] ?? null;
-                            @endphp
+                            @endphp --}}
 
-                            @if ($creditMenu)
+                            {{-- @if ($creditMenu)
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-credit"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -69,7 +90,7 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
                                         <!-- <span>{{ $creditMenu['libMenu'] }}</span> -->
                                         <div class="arrow-down"></div>
                                     </a>
-                                    {{-- le dropdown --}}
+                                    le dropdown
                                     <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl"
                                         aria-labelledby="topnav-credit">
                                         <div class="ps-2 p-lg-0">
@@ -99,7 +120,7 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
                                         </div>
                                     </div>
                                 </li>
-                            @endif
+                            @endif --}}
 
                             {{-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement"
@@ -145,7 +166,7 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
                                 </div>
                             </li> --}}
 
-                            <li class="nav-item dropdown">
+                            {{-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages"
                                     role="button">
                                     <i class="bx bx-refresh"></i>
@@ -153,7 +174,7 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
                                     <span data-key="t-apps">Operations</span>
                                     <div class="arrow-down"></div>
                                 </a>
-                                {{-- Le dropdown --}}
+                                Le dropdown
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
                                     <div class="menu-title">Operations</div>
 
@@ -172,7 +193,8 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
 
 
                                 </div>
-                            </li>
+                            </li> --}}
+                            
 
 
 

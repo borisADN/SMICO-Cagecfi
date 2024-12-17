@@ -8,7 +8,7 @@ Route::get("/", function () {
 });
 
 Route::get('/home', function () {
-    return view('welcome');
+    // return view('welcome');
 })->name('home');
 
 Route::post('/login', [ApiController::class, 'Apilogin'])->name('login');

@@ -41,18 +41,14 @@ class ApiController extends Controller
 
             $data1 = $data['listehabil'];
 
+            //   return response()->json($data1);
+
             $path = $_SERVER['DOCUMENT_ROOT'] . '/assets/json/menu.json';
 
             $data2 = file_get_contents($path);
 
             $data2 = json_decode($data2, true);
 
-            // return response()->json($data1);
-
-            // $codeoptions = array_map(function ($item) {
-            //     var_dump($item);  // Affiche chaque élément de $data1
-            //     return $item;
-            // }, $data1);
             
 
             $codeoptions = array_map(function ($item) {
@@ -80,6 +76,16 @@ class ApiController extends Controller
                 }
             }
 
+            // return response()->json($codeoptions);
+
+            $groupedOptions = [];
+
+            foreach ($synthese as $option) {
+                $groupedOptions[$option['libMenu']][] = $option;
+            }
+            // return response()->json($groupedOptions);
+
+            return view('welcome', ['groupedOptions' => $groupedOptions]);
             return response()->json($synthese);
             
             
