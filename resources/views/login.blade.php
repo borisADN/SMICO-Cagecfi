@@ -1,11 +1,8 @@
 @extends('layouts.base')
-{{-- Utiliser ici ce cdn! --}}
 <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
 
 @section('content')
 
-{{-- <div class="auth-page d-flex align-items-center min-vh-100"> --}}
-    {{-- <div class="container-fluid p-0"> --}}
         <div class="row g-0">
             <div class="col-xxl-3 col-lg-4 col-md-5">
                     <div class="d-flex flex-column h-100 py-5 px-4">
@@ -67,7 +64,6 @@
             <div class="col-xxl-9 col-lg-8 col-md-7">
                 <div class="auth-bg bg-light py-md-5 p-4 d-flex">
                     <div class="bg-overlay-gradient"></div>
-                    <!-- end bubble effect -->
                     <div class="row justify-content-center g-0 align-items-center w-100">
                         <div class="col-xl-4 col-lg-8">
                             <div class="card">
@@ -108,8 +104,6 @@
                                             </div>
         
                                             <div class="mt-3">
-                                                {{-- <a href="{{ route('home') }}"  class="btn btn-primary w-100" type="submit" data-key="t-login7">Se Connecter</a> --}}
-                                                <!-- Bootstrap Css -->
                                                 <button class="btn btn-primary w-100" type="submit" data-key="t-login7">Se Connecter</button>
                                             </div>
 
@@ -121,7 +115,7 @@
 
                                             </div>
         
-                                        </form><!-- end form -->
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -129,12 +123,21 @@
                     </div>
                 </div>
             </div>
-            <!-- end col -->
         </div>
-        <!-- end row -->
-    {{-- </div> --}}
-    <!-- end container fluid -->
-{{-- </div> --}}
+    
+
+<script src="{{ asset('assets/libs/alertifyjs/build/alertify.min.js') }}"></script>
+<script>
+    // Vérifie si une alerte error a été définie par Laravel
+    @if(session('alert') === 'error' && session('message'))
+        let message = "{{ session('message') }}"; 
+        alertify.error(message);
+    @endif
+
+</script>
+
+
+
 
 @endsection
 

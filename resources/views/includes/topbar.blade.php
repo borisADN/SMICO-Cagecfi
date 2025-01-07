@@ -38,36 +38,86 @@
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="{{ route('home') }}"
-                                    id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="bx bx-home-circle icon"></i>
+                                <a class="nav-link dropdown-toggle arrow-none" href=""
+                                id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="bx bx-home-circle icon"></i>
                                     <span data-key="t-dashboard">Accueil</span>
                                 </a>
                             </li>
 
-                            @foreach ($groupedOptions as $libMenu => $menuOptions)
+    
+
+                            {{-- @foreach($groupedOptions as $menu => $options)
+                            <h2>{{ $menu }}</h2>
+                            <ul>
+                                @foreach($options as $option)
+                                    <li>
+                                        <strong>{{ $option['libOption'] }}</strong><br>
+                                        <small>Numéro d'option: {{ $option['numOption'] }}</small><br>
+                                        <small>URL: {{ $option['urlParam'] }}</small><br>
+                                        <small>DataKey: {{ $option['dataKey'] }}</small> <!-- Affichage du dataKey -->
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endforeach --}}
+                        
+                            
+{{-- @if (!empty($groupedOptions))
+@forelse ($groupedOptions as $libMenu => $menuOptions)
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-{{ strtolower($libMenu) }}" role="button">
+            <span data-key="t-{{ strtolower($libMenu) }}">{{ $libMenu }}</span>
+            <div class="arrow-down"></div>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="topnav-{{ strtolower($libMenu) }}">
+            <div class="menu-title">{{ $libMenu }}</div>
+            @forelse ($menuOptions as $option)
+                <a href="" class="dropdown-item">{{ $option['libOption'] }}</a>
+            @empty
+                <!--<div class="menu-title">Aucune option disponible</div>-->
+            @endforelse
+        </div>
+    </li>
+@empty
+ <!--<div class="menu-title">Aucun menu disponible</div>-->
+@endforelse
+@else
+<!-- <p>Aucune donnée disponible</p> -->
+@endif --}}
+
+
+@if (!empty($groupedOptions))
+    @foreach ($groupedOptions as $libMenu => $menuOptions)
         <li class="nav-item dropdown">
+            <!-- Affichage du dataKey du menu principal -->
             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-{{ strtolower($libMenu) }}" role="button">
-                {{-- <i class="bx bx-refresh"></i> --}}
-                <span data-key="t-{{ strtolower($libMenu) }}">{{ $libMenu }}</span>
+                <span data-key="{{ $menuOptions[0]['head'] }}"></span>
                 <div class="arrow-down"></div>
             </a>
             <div class="dropdown-menu" aria-labelledby="topnav-{{ strtolower($libMenu) }}">
-                <div class="menu-title">{{ $libMenu }}</div>
+                {{-- <div class="menu-title">{{ ($menuOptions[0]['head']) }}</div> --}}
+                
                 @foreach ($menuOptions as $option)
-                <a href="" class="dropdown-item">
-                    {{ $option['libOption'] }}
-                </a>
-                    {{-- <a href="{{ route($option['urlParam']) }}" class="dropdown-item" data-key="t-{{ strtolower($option['libOption']) }}">
-                        {{ $option['libOption'] }}
-                    </a> --}}
+                    <!-- Affichage de chaque sous-menu avec un dataKey spécifique -->
+                    <a href="{{ $option['urlParam'] }}" class="dropdown-item" data-key="{{ $option['dataKey'] }}">
+                        {{ __($option['libOption']) }}
+                    </a>
                 @endforeach
             </div>
         </li>
     @endforeach
+@endif
+
+
+
+
 
                             {{-- @php
+
+
+                            Illuminate\Http\Client\ConnectionException
+cURL error 28: SSL connection timeout (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp
                                 // Charger le fichier JSON
                                 $menuPath = public_path('assets/json/menu.json'); // Chemin du fichier JSON
 
@@ -194,7 +244,7 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
 
                                 </div>
                             </li> --}}
-                            
+
 
 
 
@@ -243,21 +293,28 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item user text-start d-flex align-items-center"
-                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user"
-                        src="https://themesdesign.in/vuesy/layouts/assets/images/users/avatar-3.jpg"
+                        src="{{ asset('assets/images/personnalisation/avatar.png') }}"
                         alt="Header Avatar">
                     <span class="ms-2 d-none d-xl-inline-block user-item-desc">
-                        <span class="user-name">Boris W. <i class="mdi mdi-chevron-down"></i></span>
+                        {{-- <span class="user-name">Boris W. <i class="mdi mdi-chevron-down"></i></span> --}}
                     </span>
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-end pt-0">
-                    <h6 class="dropdown-header">Welcome Boris W!</h6>
-                    <a class="dropdown-item" href="pages-profile.html"><i
-                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Informations Clients</span></a>
+                    <h6 class="dropdown-header">Welcome {{  $completeName }}</h6>
+
+                    @foreach ($userSpace as $option)
+                    <a class="dropdown-item" href="{{ url($option['urlParam']) }}">
+                        <span class="align-middle" data-key="{{ $option['dataKey'] }}">
+                            {{ __($option['libOption']) }}
+                        </span>
+                    </a>
+                @endforeach
+
+                    {{-- <a class="dropdown-item" href="pages-profile.html"> <span
+                            class="align-middle" data-key="">Informations Clients</span></a>
 
                     <a class="dropdown-item" href="apps-chat.html"><i
                             class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i>
@@ -269,11 +326,11 @@ $creditMenu = $menus['menu']['LDCredit'] ?? null;
 
                     <a class="dropdown-item" href="pages-faqs.html"><i
                             class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Changer Code PIN</span></a>
+                            class="align-middle">Changer Code PIN</span></a> --}}
 
                     <div class="dropdown-divider"></div>
 
-                    <a class="dropdown-item" href="auth-signout-cover.html"><i
+                    <a class="dropdown-item" href="{{ route('logout') }}"><i
                             class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i> <span
                             class="align-middle">Deconnexion</span></a>
                 </div>
