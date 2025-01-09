@@ -12,8 +12,6 @@ class HomeController extends Controller
         $userSpace = session('userSpace');
         $completeName = session('complete_name');
 
-        // return $userSpace;
-
         return view(
             'welcome',
             [

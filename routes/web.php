@@ -16,10 +16,13 @@ route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('/login', [ApiController::class, 'Apilogin'])->name('login');
 Route::post('/checkBalance', [ApiController::class,'checkBalance'])->name('checkBalance');
 Route::post('/accountTransfert', [ApiController::class,'accountTransfert'])->name('accountTransfert');
+Route::post('/commissionViremt', [ApiController::class,'commissionVirement'])->name('commissionVirement');
 
 //OPERATION_VIEWS_CONTROLLER
 Route::get('trsftCpte', [OperationViewsController::class, 'AccountTransfer']);
 Route::get('viremtCpte', [OperationViewsController::class, 'AccountVirement']);
+Route::get('w2bTransaction', [OperationViewsController::class, 'WalletToBank']);
+Route::get('b2wTransaction', [OperationViewsController::class, 'BankToWallet']);
 
 // logout
 // Route::get('/logout', [HomeController::class, 'logout'])->name('logout');

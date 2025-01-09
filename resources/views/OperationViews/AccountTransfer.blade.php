@@ -51,7 +51,7 @@
                                     <div class="col-lg-6 ">
                                         <div class="mb-1">
                                             <label for="basicpill-namecard-input" class="form-label">COMPTES</label>
-                                            <select name="idcptemet" id="compte-select" class="form-control compte-select">
+                                            <select name="idcptemet" id="compte-select" class="form-control">
                                                 @foreach ($comptes as $compte)
                                                     <option value="{{ $compte['idcompte'] }}">{{ $compte['nomcompte'] }}
                                                     </option>
@@ -229,14 +229,14 @@
                     const datesolde =
                         `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}${String(now.getMilliseconds()).padStart(3, '0')}`;
 
-                    const requestData = {
-                        codeapi: "pmobile",
-                        methode: "wsoldecompte",
-                        refsession: refsession,
-                        idcompte: idcompte,
-                        montantcommission: 0,
-                        datesolde: datesolde
-                    };
+                    // const requestData = {
+                    //     codeapi: "pmobile",
+                    //     methode: "wsoldecompte",
+                    //     refsession: refsession,
+                    //     idcompte: idcompte,
+                    //     montantcommission: 0,
+                    //     datesolde: datesolde
+                    // };
                     // Envoie une requête AJAX au backend Laravel
                     $.ajax({
                         url: "/checkBalance", // Appel au backend Laravel

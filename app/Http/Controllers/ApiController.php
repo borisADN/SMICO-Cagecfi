@@ -247,4 +247,33 @@ class ApiController extends Controller
             return redirect()->back();
         }
     }
+
+    public function commissionVirement(Request $request){
+        $data = $request->all();
+
+        $ApiLink = "https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp";
+        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+            'codeapi' => 'pmobile',
+            'methode' => 'wmontantcommission',
+            'refsession' => session('referencereponse'),
+            'categoriefrais' => "WB",
+            'typecommi' => "",
+            'montantope' => $data['montantope'],
+            'typeope' => 12,
+            'idcpte' => $data['idcompte'],
+            'estinclus' => false,
+        ]);
+        if ($response->successful()){
+            $apiResponse = $response->json();
+            $commission = $apiResponse['referencereponse'];
+            return response()->json(['commission' => $commission]);
+            // return response()->json(['commission' => $response->json()]);
+            // return $response;
+        }else{
+            return "error";
+        }
+        
+
+
+    }
 }

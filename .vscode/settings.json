@@ -1,3 +1,8 @@
 {
-    "commentTranslate.targetLanguage": "fr"
+    "commentTranslate.targetLanguage": "fr",
+    "cSpell.words": [
+        "csrf",
+        "lastname",
+        "onclick"
+    ]
 }
