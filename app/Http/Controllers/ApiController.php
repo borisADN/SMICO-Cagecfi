@@ -21,8 +21,10 @@ class ApiController extends Controller
         try {
             // $ApiLink = "http://192.168.102.10/APIEXTERNE_DEMO_WEB/FR/APIEXTERNE/pmobileapi.awp";
             $ApiLink = session('ApiLink');
-            // return $ApiLink;
+
+            //type de session client ou agent
             session(['typeSession' => 'C']);
+
             // Récupérer les données du formulaire
             $username = $request->username;
             $password = $request->psd;
@@ -54,7 +56,7 @@ class ApiController extends Controller
 
                     session()->put('referencereponse', $data['referencereponse']);
 
-// return $data['listehabil'];
+                    // return $data['listehabil'];
 
                     if (!isset($data['listehabil'], $data['descriptreponse'])) {
                         session()->flash('alert', 'error');
@@ -63,6 +65,7 @@ class ApiController extends Controller
                     }
 
                     $codeoptions = array_column($data['listehabil'], 'codeoption');
+
                     // Ici, array_column est utilisé pour récupérer uniquement les valeurs associées à la clé codeoption dans chaque sous-tableau de $data['listehabil'].
                     $path = public_path('assets/json/menu.json');
                     $data2 = json_decode(file_get_contents($path), true);
@@ -95,7 +98,7 @@ class ApiController extends Controller
                     foreach ($synthese as $option) {
                         $groupedOptions[$option['libMenu']][] = $option;
                     }
-// return $groupedOptions;
+                    // return $groupedOptions;
                     $ldsSpace = $groupedOptions['LDSpace'];
                     // Supprimer le menu LDSpace de la synthèse pour ne pas afficher son contenu dans le menu
 
@@ -122,10 +125,8 @@ class ApiController extends Controller
                     ]);
 
                     if ($response2->successful()) {
-                        // return $response2;
 
                         $clientInfos = $response2->json();
-                        // return $clientInfos;
                         session(['complete_name' => $clientInfos['nom'] . ' ' . $clientInfos['prenom']]);
                         session(['complete_telephone' => $clientInfos['indicatiftel'] . $clientInfos['numtel']]);
                         session(['firstName' => $clientInfos['prenom']]);
@@ -135,7 +136,7 @@ class ApiController extends Controller
 
 
                         // Stocker les informations du client en session
-                        session(['clientInfo' => $data2]);
+                        // session(['clientInfo' => $data2]);
                     }
 
                     //avoir les infos des comptes
@@ -151,9 +152,9 @@ class ApiController extends Controller
                     ]);
 
                     if ($response3->successful()) {
-                        // return $response3;
                         $comptes = $response3->json();
-                        // return $comptes[0]['idcompte'];
+                        // La methode json() Par défaut, retourne un tableau associatif en PHP, car c'est souvent plus pratique pour manipuler des données.
+                        // Cela évite à l'utilisateur d'avoir à appeler manuellement json_decode($response->body()) pour obtenir les données sous forme exploitable.
                         session(['compte_id' => $comptes[0]['idcompte']]);
                         session(['comptes' => $comptes]);
                     }
@@ -208,7 +209,7 @@ class ApiController extends Controller
                 $solde = $solde_data['referencereponse'];
                 return response()->json(['solde' => $solde]);
             } else {
-                // return response()->json(['solde' => $solde_data]);
+                // Dans le cas ou le solde est insuffisant , afficher 0!
                 return response()->json(['solde' => '0']);
             }
         } else {
@@ -224,7 +225,8 @@ class ApiController extends Controller
 
             set_time_limit(60);
 
-            $ApiLink = session('ApiLink');            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+            $ApiLink = session('ApiLink');
+            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
                 'codeapi' => 'pmobile',
                 'methode' => 'wtransfertcompte',
                 'refsession' => session('referencereponse'),
@@ -240,11 +242,13 @@ class ApiController extends Controller
                 'refmanuel' => '',
                 'codepinemet' => $data['codepinemet'],
             ]);
+
             if ($data['idcptrecept'] == $data['idcptemet']) {
                 session()->flash('alert', 'error');
                 session()->flash('message', 'Les comptes sont identiques!');
                 return redirect()->back();
             }
+            
             if ($response->successful()) {
                 $ApiResponse = $response->json();
                 $ApiMessage = $ApiResponse['descriptreponse'];
@@ -277,7 +281,8 @@ class ApiController extends Controller
     {
         $data = $request->all();
 
-        $ApiLink = session('ApiLink');        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+        $ApiLink = session('ApiLink');
+        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
             'codeapi' => 'pmobile',
             'methode' => 'wmontantcommission',
             'refsession' => session('referencereponse'),
@@ -300,8 +305,8 @@ class ApiController extends Controller
     public function getReceiverInfo_virement(Request $request)
     {
         $data = $request->all();
-        $ApiLink = session('ApiLink');     
-           $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+        $ApiLink = session('ApiLink');
+        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
             'codeapi' => 'pmobile',
             'methode' => 'winfocodeclientoperation',
             'refsession' => session('referencereponse'),
@@ -313,8 +318,6 @@ class ApiController extends Controller
         if ($response->successful()) {
             $apiResponse = $response->json();
             return response()->json(['apiResponse' => $apiResponse]);
-            // return $apiResponse;
-            // $receiverInfo = $apiResponse['referencereponse'];
         } else {
             return "error";
         }
@@ -344,18 +347,19 @@ class ApiController extends Controller
                 'refmanuel' => '',
                 'codepinemet' => $data['codepinemet'],
             ]);
+
             if ($data['idcptrecept'] == $data['idcptemet']) {
                 session()->flash('alert', 'error');
                 session()->flash('message', 'Les comptes sont identiques!');
                 return redirect()->back();
             }
+
             if ($response->successful()) {
                 $ApiResponse = $response->json();
                 $ApiMessage = $ApiResponse['descriptreponse'];
                 if ($ApiMessage == 'SUCCESS') {
                     session()->flash('alert', 'success');
                     session()->flash('message', $ApiMessage);
-                    // return "cool";
                     return redirect()->back();
                 } else {
                     session()->flash('alert', 'error');
@@ -372,7 +376,6 @@ class ApiController extends Controller
             session()->flash('message', 'Vérifiez votre Connexion!');
             return redirect()->back();
         } catch (Exception $e) {
-            //    return $e->getMessage();
             session()->flash('alert', 'error');
             session()->flash('message', 'Une erreur inattendue ! ');
             return redirect()->back();
@@ -383,13 +386,12 @@ class ApiController extends Controller
     {
         try {
 
-            // return $request;
             $data = $request->all();
 
             set_time_limit(60);
 
             $ApiLink = session('ApiLink');
-                        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
                 'codeapi' => 'pmobile',
                 'methode' => 'wbanktowalet',
                 'refsession' => session('referencereponse'),
@@ -418,14 +420,9 @@ class ApiController extends Controller
                 'commirecept' => 0,
                 'codepin' => $data['codepin'],
             ]);
-            // if($data['idcptrecept']==$data['idcptemet']){
-            //     session()->flash('alert', 'error');
-            //     session()->flash('message', 'Les comptes sont identiques!');
-            //     return redirect()->back();
-            // }
+
             if ($response->successful()) {
                 $ApiResponse = $response->json();
-                // return $ApiResponse;
                 $ApiMessage = $ApiResponse['descriptreponse'];
                 if ($ApiMessage == 'SUCCESS') {
                     session()->flash('alert', 'success');
@@ -491,21 +488,15 @@ class ApiController extends Controller
                 'commirecept' => 0,
                 'codepin' => $data['codepin'],
             ]);
-            // if($data['idcptrecept']==$data['idcptemet']){
-            //     session()->flash('alert', 'error');
-            //     session()->flash('message', 'Les comptes sont identiques!');
-            //     return redirect()->back();
-            // }
+        
             if ($response->successful()) {
                 $ApiResponse = $response->json();
-                // return $ApiResponse;
                 $ApiMessage = $ApiResponse['descriptreponse'];
                 if ($ApiMessage == 'SUCCESS') {
                     session()->flash('alert', 'success');
                     session()->flash('message', $ApiMessage);
                     return redirect()->back();
                 } else {
-                    // return $ApiResponse;
                     session()->flash('alert', 'error');
                     session()->flash('message', $ApiMessage);
                     return redirect()->back();

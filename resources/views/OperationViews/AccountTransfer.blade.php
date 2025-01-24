@@ -7,13 +7,9 @@
     @include('includes.topbar')
     @include('includes.spinner')
 
-    <br><br><br><br><br>
-
     <div class="main-content mb-5">
-
         <div class="row custom-card  ">
             <div class="col-lg-12 ">
-
                 <div id="alert-placeholder">
 
                     {{-- Alerte de type erreur --}}
@@ -32,9 +28,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                
+
                 </div>
-                
+
                 {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <i class="uil uil-exclamation-octagon me-2"></i>
                Solde insuffisant sur le compte
@@ -51,8 +47,7 @@
                             <ul class="wizard-nav">
                                 <li class="wizard-list-item">
                                     <div class="list-item">
-                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                                          >
+                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top">
                                             1
                                             <i class="uil uil-list-ul"></i>
                                         </div>
@@ -61,8 +56,7 @@
 
                                 <li class="wizard-list-item">
                                     <div class="list-item">
-                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                                          >
+                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top">
                                             2
                                             <i class="uil uil-clipboard-notes"></i>
                                         </div>
@@ -98,8 +92,6 @@
                                             </div>
                                         </div>
 
-
-
                                         <div>
                                             <div class="text-center mb-4">
                                                 <h5>Details Monetaires de L'operation</h5>
@@ -109,7 +101,6 @@
                                                 <label for="basicpill-pancard-input" class="form-label">MONTANT</label>
                                                 <input name="montantope" type="text" class="form-control"
                                                     id="basicpill-pancard-input">
-                                             
                                             </div>
 
                                             <div class="mb-1">
@@ -233,7 +224,7 @@
             $(document).ready(function() {
                 // Ajoute un événement "click" au bouton avec l'ID "trigger-api-btn"
                 $('#trigger-api-btn').on('click', function() {
-                // Affiche une icône de chargement
+                    // Affiche une icône de chargement
                     showSpinner('Veuillez patienter...');
                     const idcompte = $('#compte-select').val();
 
@@ -269,7 +260,7 @@
                                 $('#balance').val(response.solde);
                                 if (response.solde == 0) {
                                     showAlert("Solde insuffisant sur le compte.");
-                                                                 // alertify.error('Solde insuffisant sur le compte.');
+                                    // alertify.error('Solde insuffisant sur le compte.');
                                 }
                             } else {
                                 showAlert('Erreur dans la réponse.');
@@ -301,8 +292,8 @@
                     // Désactive le bouton pour éviter les clics multiples pendant la requête
                     const button = $(this);
                     button.prop('disabled', true).html(
-                        '<i class="bx bx-loader-alt bx-spin"></i>'); 
-                        // Affiche une icône de chargement
+                        '<i class="bx bx-loader-alt bx-spin"></i>');
+                    // Affiche une icône de chargement
                     showSpinner('Veuillez patienter...');
                     const idcompte = $('#compte-select2').val();
 
@@ -337,7 +328,7 @@
                             if (response.solde) {
                                 $('#balance2').val(response.solde);
                                 if (response.solde == 0) {
-                                     showAlert("Solde insuffisant sur le compte.");
+                                    showAlert("Solde insuffisant sur le compte.");
                                     // alertify.error('Solde insuffisant sur le compte.');
                                 }
                             } else {
@@ -346,7 +337,7 @@
                             }
                         },
                         error: function(xhr, status, error) {
-                            showAlert('Erreur inattendue!'); 
+                            showAlert('Erreur inattendue!');
                             alertify.error('Erreur inattendue!');
                             // console.error(xhr.responseText);
                             // alert("Erreur : " + (xhr.responseJSON?.error || error));
@@ -362,7 +353,6 @@
                 });
             });
         </script>
-
         @include('includes.footer')
     </div>
 @endsection

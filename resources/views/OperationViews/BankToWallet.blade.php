@@ -4,7 +4,7 @@
 @section('content')
     @include('includes.topbar')
     @include('includes.spinner')
-    <br><br><br><br><br>
+    
 
     <div class="main-content mb-5">
 
@@ -41,7 +41,6 @@
 
                             <div class="wizard-tab">
                                 <div class="text-center">
-                                    {{-- <h5>DE</h5> --}}
                                 </div>
 
                                 <div class="row d-flex justify-content-center">
@@ -75,23 +74,19 @@
                                    
                                         <label class="form-label" for="formrow-password-input">Telephone</label>
                                         <div class="mb-3">
-                                            {{-- <label class="form-label" for="formrow-firstname-input">First name</label> --}}
                                             <select name="" id="" class="form-control">
                                                 <option value="">{{ $complete_telephone }}</option>
                                                                                         </select>
 
                                         </select>
-                                        {{-- <input type="text" class="form-control" id="formrow-firstname-input" placeholder="Enter First Name"> --}}
                                     </div>
 
                                     <div class="row">                                                            
                                         <div class="col-md-4 col-lg-4 col-sm-4">
                                             <div class="mb-3">
-                                                {{-- <label style="visibility: hidden" class="form-label " for="formrow-email-input">Email</label> --}}
                                                 <select name="" id="" class="form-control">
                                                     <option value="">{{$indicatif }}</option>
                                                 </select>
-                                                {{-- <input type="email" class="form-control" id="formrow-email-input" placeholder="Enter E-mail"> --}}
                                             </div>
                                         </div><!-- end col -->
                                         <div class="col-md-8 col-lg-8 col-sm-8">
@@ -107,17 +102,13 @@
                                         </div>                                                         
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                {{-- <label class="form-label" for="formrow-email-input">Email</label> --}}
                                                 <div class="mb-3">
-                                                    {{-- <label class="form-label" for="formrow-password-input">Password</label> --}}
                                                     <input type="text" class="form-control" readonly id="formrow-password-input" value="{{ $lastName }}">
                                                 </div>
-                                                {{-- <input type="email" class="form-control" id="formrow-email-input" placeholder="Enter E-mail"> --}}
                                             </div>
                                         </div><!-- end col -->
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                {{-- <label class="form-label" for="formrow-password-input">Password</label> --}}
                                                 <input type="text" class="form-control" readonly id="formrow-password-input" value="{{ $firstName }}">
                                             </div>
                                         </div><!-- end col -->
@@ -140,7 +131,6 @@
                                                     <input type="text" name="montantope" class="form-control w-75"
                                                         id="basicpill-lastname-input">
                                                         FCFA
-                                                    {{-- <button class="btn btn-primary"><i class="bx bx-refresh fw-bold"></i></button> --}}
                                                 </div>
                                             </div>
 
@@ -158,7 +148,6 @@
                                                 <div class="d-flex align-items-center flex-direction-row gap-3">
                                                     <input type="text" class="form-control w-75"
                                                         id="basicpill-lastname-input">
-                                                    {{-- <button class="btn btn-primary"><i class="bx bx-refresh fw-bold"></i></button> --}}
                                                 </div>
                                             </div>
 
@@ -167,14 +156,6 @@
                                                     class="form-label">DESCRIPTION</label>
                                                 <textarea class="form-control" name="" id="" cols="10" rows="4"></textarea>
                                             </div>
-
-                                            {{-- <div class="d-flex align-items-center flex-direction-row gap-3">
-                                                <a id="submit-btn" class="btn btn-primary w-sm">Soumettre</a>
-                                                <button class="btn btn-primary">Valider</button>
-                                                <button class="btn btn-primary">Annuler</button>
-        
-                                            </div> --}}
-
                                         </div>
                                     </div>
                             </div>

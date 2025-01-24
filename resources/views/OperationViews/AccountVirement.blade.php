@@ -4,9 +4,6 @@
 @section('content')
     @include('includes.topbar')
     @include('includes.spinner')
-
-    <br><br><br><br><br>
-
     <div class="main-content mb-5">
 
         <div class="row custom-card  ">
@@ -51,7 +48,7 @@
                                 <li class="wizard-list-item">
                                     <div class="list-item">
                                         <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="">
+                                           >
                                             2
                                             <i class="uil uil-clipboard-notes"></i>
                                         </div>
@@ -297,7 +294,6 @@
                 });
             });
         </script>
-
 
         {{-- Script pour afficher la commission liée au virement --}}
         <script>
@@ -599,9 +595,6 @@
             // alertify.success(message);
             // @endif
         </script>
-
-
-
         @include('includes.footer')
     </div>
 @endsection

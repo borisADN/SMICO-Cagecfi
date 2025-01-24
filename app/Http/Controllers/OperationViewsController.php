@@ -27,6 +27,7 @@ class OperationViewsController extends Controller
             ]
         );
     }
+
     public function AccountVirement()
     {
         $groupedOptions = session('groupedOptions');
@@ -45,6 +46,7 @@ class OperationViewsController extends Controller
             ]
         );
     }
+
     public function WalletToBank()
     {
         $groupedOptions = session('groupedOptions');
@@ -74,6 +76,7 @@ class OperationViewsController extends Controller
             ]
         );
     }
+    
     public function BankToWallet()
     {
         $groupedOptions = session('groupedOptions');
