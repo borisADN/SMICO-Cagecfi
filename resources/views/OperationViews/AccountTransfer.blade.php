@@ -5,6 +5,7 @@
 
 @section('content')
     @include('includes.topbar')
+    @include('includes.spinner')
 
     <br><br><br><br><br>
 
@@ -12,6 +13,34 @@
 
         <div class="row custom-card  ">
             <div class="col-lg-12 ">
+
+                <div id="alert-placeholder">
+
+                    {{-- Alerte de type erreur --}}
+                    @if (session('alert') === 'error' && session('message'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="uil uil-exclamation-octagon me-2"></i>
+                            {{ session('message') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if (session('alert') === 'success' && session('message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="uil uil-check-circle me-2"></i>
+                            {{ session('message') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                
+                </div>
+                
+                {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="uil uil-exclamation-octagon me-2"></i>
+               Solde insuffisant sur le compte
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>  --}}
+
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title text-center fw-bold">TRANSFERT ENTRE MES COMPTES</h4>
@@ -23,7 +52,7 @@
                                 <li class="wizard-list-item">
                                     <div class="list-item">
                                         <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Seller Details">
+                                          >
                                             1
                                             <i class="uil uil-list-ul"></i>
                                         </div>
@@ -33,7 +62,7 @@
                                 <li class="wizard-list-item">
                                     <div class="list-item">
                                         <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Company Document">
+                                          >
                                             2
                                             <i class="uil uil-clipboard-notes"></i>
                                         </div>
@@ -80,6 +109,7 @@
                                                 <label for="basicpill-pancard-input" class="form-label">MONTANT</label>
                                                 <input name="montantope" type="text" class="form-control"
                                                     id="basicpill-pancard-input">
+                                             
                                             </div>
 
                                             <div class="mb-1">
@@ -92,10 +122,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -128,8 +154,6 @@
                                                 <button class="btn btn-primary" id="trigger-api-btn2"><i
                                                         class="bx bx-refresh fw-bold"></i></button>
                                             </div>
-
-
                                         </div>
 
                                         <div class="mb-1">
@@ -137,9 +161,6 @@
                                                 class="form-label">DESCRIPTION</label>
                                             <textarea class="form-control" name="" id="" cols="10" rows="4"></textarea>
                                         </div>
-
-                                        <a id="submit-btn" class="btn btn-primary w-sm">Soumettre</a>
-
                                     </div>
                                 </div>
                             </div>
@@ -147,8 +168,8 @@
                             <div class="d-flex align-items-start gap-3">
                                 <button type="button" class="btn btn-primary w-sm" id="prevBtn"
                                     onclick="nextPrev(-1)">Precedent</button>
-                                <button type="button" class="btn btn-primary w-sm ms-auto" id="nextBtn"
-                                    onclick="nextPrev(1)">Suivant</button>
+                                <button type="button" class="btn btn-primary w-sm ms-auto"
+                                    id="nextBtn">Suivant</button>
                             </div>
 
                         </form>
@@ -157,9 +178,10 @@
             </div>
         </div>
         <script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script>
+        <script src="{{ asset('assets/libs/showAlert/showAlert.js') }}"></script>
 
         <script>
-            document.getElementById("submit-btn").addEventListener("click", function() {
+            function handleFinish() {
                 Swal.fire({
                     title: "Entrez votre code PIN",
                     input: "password",
@@ -191,52 +213,41 @@
                         hiddenPinField.value = result.value;
                         form.appendChild(hiddenPinField);
 
-
                         form.submit();
+                        showSpinner('Veuillez patienter...');
 
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         Swal.fire({
                             icon: "info",
-                            title: "Operation annulée",
+                            title: "Opération annulée",
                             confirmButtonColor: "#776acf",
                         });
                     }
                 });
-            });
+            }
         </script>
 
-{{-- Script pour verifier le solde du compte emetteur --}}
+        {{-- Script pour verifier le solde du compte emetteur --}}
         <script>
             // Exécute le script une fois que le document HTML est complètement chargé
             $(document).ready(function() {
                 // Ajoute un événement "click" au bouton avec l'ID "trigger-api-btn"
                 $('#trigger-api-btn').on('click', function() {
-                    // Désactive le bouton pour éviter les clics multiples pendant la requête
-                    const button = $(this);
-                    button.prop('disabled', true).html(
-                        '<i class="bx bx-loader-alt bx-spin"></i>'); // Affiche une icône de chargement
-
+                // Affiche une icône de chargement
+                    showSpinner('Veuillez patienter...');
                     const idcompte = $('#compte-select').val();
 
 
                     const refsession = "{{ session('referencereponse') }}"
                     if (!refsession) {
                         alert('La session est manquante !');
-                        button.prop('disabled', false).html('<i class="bx bx-refresh fw-bold"></i>');
+                        // button.prop('disabled', false).html('<i class="bx bx-refresh fw-bold"></i>');
                         return;
                     }
                     const now = new Date();
                     const datesolde =
                         `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}${String(now.getMilliseconds()).padStart(3, '0')}`;
 
-                    // const requestData = {
-                    //     codeapi: "pmobile",
-                    //     methode: "wsoldecompte",
-                    //     refsession: refsession,
-                    //     idcompte: idcompte,
-                    //     montantcommission: 0,
-                    //     datesolde: datesolde
-                    // };
                     // Envoie une requête AJAX au backend Laravel
                     $.ajax({
                         url: "/checkBalance", // Appel au backend Laravel
@@ -253,29 +264,35 @@
                             datesolde: datesolde
                         },
                         success: function(response) {
-                            // console.log(response);
+                            console.log(response);
                             if (response.solde) {
                                 $('#balance').val(response.solde);
+                                if (response.solde == 0) {
+                                    showAlert("Solde insuffisant sur le compte.");
+                                                                 // alertify.error('Solde insuffisant sur le compte.');
+                                }
                             } else {
-                                alert("Erreur dans la réponse.");
+                                showAlert('Erreur dans la réponse.');
+                                // alertify.error('Erreur dans la réponse.');
                             }
                         },
                         error: function(xhr, status, error) {
+                            // alertify.error('Erreur inattendue!');
+                            // showAlert('Erreur inattendue!');
                             console.error(xhr.responseText);
-                            alert("Erreur : " + (xhr.responseJSON?.error || error));
+                            // alert("Erreur : " + (xhr.responseJSON?.error || error));
                         },
                         complete: function() {
                             // Réinitialiser le bouton
-                            $('#trigger-api-btn').prop('disabled', false);
-                            $('#trigger-api-btn').html('<i class="bx bx-refresh fw-bold"></i>');
+                            hideSpinner();
                         }
 
                     });
                 });
             });
         </script>
-        
-{{-- Script pour verifier le solde du compte recepteur --}}
+
+        {{-- Script pour verifier le solde du compte recepteur --}}
         <script>
             // Exécute le script une fois que le document HTML est complètement chargé
             $(document).ready(function() {
@@ -284,8 +301,9 @@
                     // Désactive le bouton pour éviter les clics multiples pendant la requête
                     const button = $(this);
                     button.prop('disabled', true).html(
-                        '<i class="bx bx-loader-alt bx-spin"></i>'); // Affiche une icône de chargement
-
+                        '<i class="bx bx-loader-alt bx-spin"></i>'); 
+                        // Affiche une icône de chargement
+                    showSpinner('Veuillez patienter...');
                     const idcompte = $('#compte-select2').val();
 
 
@@ -299,14 +317,6 @@
                     const datesolde =
                         `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}${String(now.getMilliseconds()).padStart(3, '0')}`;
 
-                    const requestData = {
-                        codeapi: "pmobile",
-                        methode: "wsoldecompte",
-                        refsession: refsession,
-                        idcompte: idcompte,
-                        montantcommission: 0,
-                        datesolde: datesolde
-                    };
                     // Envoie une requête AJAX au backend Laravel
                     $.ajax({
                         url: "/checkBalance", // Appel au backend Laravel
@@ -318,24 +328,32 @@
                             codeapi: "pmobile",
                             methode: "wsoldecompte",
                             refsession: "{{ session('refsession') }}",
-                            idcompte: $('#compte-select').val(),
+                            idcompte: $('#compte-select2').val(),
                             montantcommission: $('#montantcommission').val() || 0,
                             datesolde: datesolde
                         },
                         success: function(response) {
-                            // console.log(response);
+                            console.log(response);
                             if (response.solde) {
                                 $('#balance2').val(response.solde);
+                                if (response.solde == 0) {
+                                     showAlert("Solde insuffisant sur le compte.");
+                                    // alertify.error('Solde insuffisant sur le compte.');
+                                }
                             } else {
-                                alert("Erreur dans la réponse.");
+                                showAlert('Erreur dans la réponse.');
+                                // alertify.error('Erreur dans la réponse.');
                             }
                         },
                         error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                            alert("Erreur : " + (xhr.responseJSON?.error || error));
+                            showAlert('Erreur inattendue!'); 
+                            alertify.error('Erreur inattendue!');
+                            // console.error(xhr.responseText);
+                            // alert("Erreur : " + (xhr.responseJSON?.error || error));
                         },
                         complete: function() {
                             // Réinitialiser le bouton
+                            hideSpinner();
                             $('#trigger-api-btn2').prop('disabled', false);
                             $('#trigger-api-btn2').html('<i class="bx bx-refresh fw-bold"></i>');
                         }
@@ -344,20 +362,6 @@
                 });
             });
         </script>
-
-<script src="{{ asset('assets/libs/alertifyjs/build/alertify.min.js') }}"></script>
-<script>
-    // Vérifie si une alerte error a été définie par Laravel
-    @if(session('alert') === 'error' && session('message'))
-        let message = "{{ session('message') }}"; 
-        alertify.error(message);
-    @endif
-
-    @if(session('alert') ==='success' && session('message'))
-        let message = "{{ session('message') }}"; 
-        alertify.success(message);
-    @endif
-</script>
 
         @include('includes.footer')
     </div>

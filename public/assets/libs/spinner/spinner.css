@@ -1,0 +1,82 @@
+#custom-spinner-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Overlay semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.custom-spinner-box {
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.spinner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spinner-content p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Style du spinner personnalisé */
+.pl,
+.pl__worm {
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+.pl {
+    animation-name: bump;
+    animation-timing-function: linear;
+    width: 8em;
+    height: 8em;
+}
+.pl__ring {
+    stroke: hsla(var(--hue),10%,10%,0.1);
+}
+.pl__worm {
+    animation-name: worm;
+    animation-timing-function: cubic-bezier(0.42, 0.17, 0.75, 0.83);
+}
+
+@keyframes bump {
+    from,
+    42%,
+    to {
+        transform: translate(0, 0);
+    }
+    44% {
+        transform: translate(1.33%, 6.75%);
+    }
+    53% {
+        transform: translate(-16.67%, -0.54%);
+    }
+    61% {
+        transform: translate(3.66%, -2.46%);
+    }
+}
+
+@keyframes worm {
+    from {
+        stroke-dashoffset: 10;
+    }
+    25% {
+        stroke-dashoffset: 295;
+    }
+    to {
+        stroke-dashoffset: 1165;
+    }
+}

@@ -19,9 +19,15 @@
     "t-myAccount-WA04": "Situation Compte",
     "t-myAccount-WA06": "Releve",
 
+    "t-credit" : "Credit",
+    "t-credit-WC07" : "Amortissement",
+    "t-credit-WC08" : "Situation Remboursement",
+    "t-credit-WC16" : "Simulation Amortissement",
+    "t-credit-WC15" : "Demande Credit",
+
     "t-operation": "Operation",
     "t-operation-WC17": "Retrait Initie",
-    "t-operation-WC18": "Mise Dispo",
+    "t-operation-WC18": "Mise a Disposition",
     "t-operation-WC19": "Annulation Mise Dispo",
     "t-operation-WC20": "Reglement Facture",
     "t-operation-WC21": "Reglement Achat",

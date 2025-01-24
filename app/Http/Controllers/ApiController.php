@@ -13,17 +13,25 @@ use Illuminate\Http\Client\ConnectionException;
 
 class ApiController extends Controller
 {
+
     public function Apilogin(Request $request)
     {
 
+        session(['ApiLink' => 'http://139.99.184.102/APIEXTERNE_ACEFINANCE_WEB/FR/APIEXTERNE/pmobileapi.awp']);            // $ApiLink = "https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp";
         try {
-            $ApiLink = "https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp";
             // $ApiLink = "http://192.168.102.10/APIEXTERNE_DEMO_WEB/FR/APIEXTERNE/pmobileapi.awp";
-
+            $ApiLink = session('ApiLink');
+            // return $ApiLink;
             session(['typeSession' => 'C']);
             // Récupérer les données du formulaire
             $username = $request->username;
             $password = $request->psd;
+
+            if (empty($username) || empty($password)) {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Veuillez fournir un nom d’utilisateur et un mot de passe.');
+                return redirect()->back();
+            }
 
             $response = Http::withOptions(['verify' => false])->post($ApiLink, [
                 'codeapi' => 'pmobile',
@@ -46,9 +54,11 @@ class ApiController extends Controller
 
                     session()->put('referencereponse', $data['referencereponse']);
 
+// return $data['listehabil'];
+
                     if (!isset($data['listehabil'], $data['descriptreponse'])) {
                         session()->flash('alert', 'error');
-                        session()->flash('message', 'Données de réponse invalides.');
+                        session()->flash('message', 'Merci de bien vouloir vous adresser à un administrateur pour obtenir les habilitations nécessaires');
                         return redirect()->back();
                     }
 
@@ -85,7 +95,7 @@ class ApiController extends Controller
                     foreach ($synthese as $option) {
                         $groupedOptions[$option['libMenu']][] = $option;
                     }
-
+// return $groupedOptions;
                     $ldsSpace = $groupedOptions['LDSpace'];
                     // Supprimer le menu LDSpace de la synthèse pour ne pas afficher son contenu dans le menu
 
@@ -112,8 +122,17 @@ class ApiController extends Controller
                     ]);
 
                     if ($response2->successful()) {
+                        // return $response2;
+
                         $clientInfos = $response2->json();
+                        // return $clientInfos;
                         session(['complete_name' => $clientInfos['nom'] . ' ' . $clientInfos['prenom']]);
+                        session(['complete_telephone' => $clientInfos['indicatiftel'] . $clientInfos['numtel']]);
+                        session(['firstName' => $clientInfos['prenom']]);
+                        session(['lastName' => $clientInfos['nom']]);
+                        session(['indicatif' => $clientInfos['indicatiftel']]);
+                        session(['telephone' => $clientInfos['numtel']]);
+
 
                         // Stocker les informations du client en session
                         session(['clientInfo' => $data2]);
@@ -132,7 +151,9 @@ class ApiController extends Controller
                     ]);
 
                     if ($response3->successful()) {
+                        // return $response3;
                         $comptes = $response3->json();
+                        // return $comptes[0]['idcompte'];
                         session(['compte_id' => $comptes[0]['idcompte']]);
                         session(['comptes' => $comptes]);
                     }
@@ -152,6 +173,7 @@ class ApiController extends Controller
             session()->flash('message', 'Erreur de connexion');
             return redirect()->back();
         } catch (Exception $e) {
+            // return $e;
             session()->flash('alert', 'error');
             session()->flash('message', 'Une erreur inattendue : ' . $e->getMessage());
             return redirect()->back();
@@ -169,8 +191,7 @@ class ApiController extends Controller
             'datesolde' => 'required|string',
         ]);
 
-        $ApiLink = "https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp";
-
+        $ApiLink = session('ApiLink');
         $response = Http::withOptions(['verify' => false])->post($ApiLink, [
             'codeapi' => $validated['codeapi'],
             'methode' => $validated['methode'],
@@ -183,8 +204,13 @@ class ApiController extends Controller
         // Vérifie que la réponse est bien un JSON
         if ($response->successful()) {
             $solde_data = $response->json();
-            $solde = $solde_data['referencereponse'];
-            return response()->json(['solde' => $solde]);
+            if (array_key_exists('referencereponse', $solde_data) && !empty($solde_data['referencereponse'])) {
+                $solde = $solde_data['referencereponse'];
+                return response()->json(['solde' => $solde]);
+            } else {
+                // return response()->json(['solde' => $solde_data]);
+                return response()->json(['solde' => '0']);
+            }
         } else {
             // cas d'erreur, retourner un message d'erreur
             return response()->json(['error' => 'Erreur lors de la récupération du solde'], 500);
@@ -198,8 +224,7 @@ class ApiController extends Controller
 
             set_time_limit(60);
 
-            $ApiLink = "https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp";
-            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+            $ApiLink = session('ApiLink');            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
                 'codeapi' => 'pmobile',
                 'methode' => 'wtransfertcompte',
                 'refsession' => session('referencereponse'),
@@ -215,7 +240,7 @@ class ApiController extends Controller
                 'refmanuel' => '',
                 'codepinemet' => $data['codepinemet'],
             ]);
-            if($data['idcptrecept']==$data['idcptemet']){
+            if ($data['idcptrecept'] == $data['idcptemet']) {
                 session()->flash('alert', 'error');
                 session()->flash('message', 'Les comptes sont identiques!');
                 return redirect()->back();
@@ -223,11 +248,11 @@ class ApiController extends Controller
             if ($response->successful()) {
                 $ApiResponse = $response->json();
                 $ApiMessage = $ApiResponse['descriptreponse'];
-                if ($ApiMessage == 'SUCCESS'){
+                if ($ApiMessage == 'SUCCESS') {
                     session()->flash('alert', 'success');
                     session()->flash('message', $ApiMessage);
                     return redirect()->back();
-                }else{
+                } else {
                     session()->flash('alert', 'error');
                     session()->flash('message', $ApiMessage);
                     return redirect()->back();
@@ -248,11 +273,11 @@ class ApiController extends Controller
         }
     }
 
-    public function commissionVirement(Request $request){
+    public function commissionVirement(Request $request)
+    {
         $data = $request->all();
 
-        $ApiLink = "https://creditdusahel.net:8081/DEMO_APIEXTERNE_CDS_WEB/FR/APIEXTERNE/pmobileapi.awp";
-        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+        $ApiLink = session('ApiLink');        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
             'codeapi' => 'pmobile',
             'methode' => 'wmontantcommission',
             'refsession' => session('referencereponse'),
@@ -263,17 +288,242 @@ class ApiController extends Controller
             'idcpte' => $data['idcompte'],
             'estinclus' => false,
         ]);
-        if ($response->successful()){
+        if ($response->successful()) {
             $apiResponse = $response->json();
             $commission = $apiResponse['referencereponse'];
             return response()->json(['commission' => $commission]);
-            // return response()->json(['commission' => $response->json()]);
-            // return $response;
-        }else{
+        } else {
             return "error";
         }
-        
+    }
 
+    public function getReceiverInfo_virement(Request $request)
+    {
+        $data = $request->all();
+        $ApiLink = session('ApiLink');     
+           $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+            'codeapi' => 'pmobile',
+            'methode' => 'winfocodeclientoperation',
+            'refsession' => session('referencereponse'),
+            'codeclient' => $data['codeclient'] ?? '',
+            'typeclient' => "E",
+            'ididentite' => $data['id_mobile'] ?? '',
+            'operationafaire' => "RECEPTION_VIREMENT",
+        ]);
+        if ($response->successful()) {
+            $apiResponse = $response->json();
+            return response()->json(['apiResponse' => $apiResponse]);
+            // return $apiResponse;
+            // $receiverInfo = $apiResponse['referencereponse'];
+        } else {
+            return "error";
+        }
+    }
 
+    public function virementProcess(Request $request)
+    {
+
+        try {
+            $data = $request->all();
+
+            set_time_limit(60);
+            $ApiLink = session('ApiLink');
+            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+                'codeapi' => 'pmobile',
+                'methode' => 'wtransfertcompte',
+                'refsession' => session('referencereponse'),
+                'idcptemet' => $data['idcptemet'],
+                'idcptrecept' => $data['idcptrecept'],
+                'montantope' => $data['montantope'],
+                'codepinagent' => '',
+                'codeotp' => '',
+                'idtypeoperation' => 12,
+                'descriptionoperation' => '',
+                'suffixedescription' => '',
+                'commission' => 0,
+                'refmanuel' => '',
+                'codepinemet' => $data['codepinemet'],
+            ]);
+            if ($data['idcptrecept'] == $data['idcptemet']) {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Les comptes sont identiques!');
+                return redirect()->back();
+            }
+            if ($response->successful()) {
+                $ApiResponse = $response->json();
+                $ApiMessage = $ApiResponse['descriptreponse'];
+                if ($ApiMessage == 'SUCCESS') {
+                    session()->flash('alert', 'success');
+                    session()->flash('message', $ApiMessage);
+                    // return "cool";
+                    return redirect()->back();
+                } else {
+                    session()->flash('alert', 'error');
+                    session()->flash('message', $ApiMessage);
+                    return redirect()->back();
+                }
+            } else {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Erreur lors du Transfert!');
+                return redirect()->back();
+            }
+        } catch (ConnectionException $e) {
+            session()->flash('alert', 'error');
+            session()->flash('message', 'Vérifiez votre Connexion!');
+            return redirect()->back();
+        } catch (Exception $e) {
+            //    return $e->getMessage();
+            session()->flash('alert', 'error');
+            session()->flash('message', 'Une erreur inattendue ! ');
+            return redirect()->back();
+        }
+    }
+
+    public function BankToWallet(Request $request)
+    {
+        try {
+
+            // return $request;
+            $data = $request->all();
+
+            set_time_limit(60);
+
+            $ApiLink = session('ApiLink');
+                        $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+                'codeapi' => 'pmobile',
+                'methode' => 'wbanktowalet',
+                'refsession' => session('referencereponse'),
+                'numcel' => session('complete_telephone'),
+                'codeotp' => '',
+                'benefnom' => session('lastName'),
+                'benefprenom' => session('firstName'),
+                'commentaire' => '',
+                'refopration' => 12,
+                'idcompte' =>  $data['idcptemet'],
+                'montantope' => $data['montantope'],
+                'clientotp' => "1259633",
+                'idoperateur' => 1001,
+                'codeservice' => 'MAVIANCE_MOMO_ORANGE',
+                'numcelrecept' => '',
+                'typeoperecep' => '',
+                'receptnom' => 12,
+                'idoperateurrecept' => 0,
+                'codeservicerecept' => '',
+                'idcarte' => '',
+                'pan4' => '',
+                'idproduitcarte' => 1,
+                'idmonetiquecarte' => 0,
+                'idtypeoperecept' => 0,
+                'montantrecept' => 0,
+                'commirecept' => 0,
+                'codepin' => $data['codepin'],
+            ]);
+            // if($data['idcptrecept']==$data['idcptemet']){
+            //     session()->flash('alert', 'error');
+            //     session()->flash('message', 'Les comptes sont identiques!');
+            //     return redirect()->back();
+            // }
+            if ($response->successful()) {
+                $ApiResponse = $response->json();
+                // return $ApiResponse;
+                $ApiMessage = $ApiResponse['descriptreponse'];
+                if ($ApiMessage == 'SUCCESS') {
+                    session()->flash('alert', 'success');
+                    session()->flash('message', $ApiMessage);
+                    return redirect()->back();
+                } else {
+                    session()->flash('alert', 'error');
+                    session()->flash('message', $ApiMessage);
+                    return redirect()->back();
+                }
+            } else {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Erreur lors de l\'operation!');
+                return redirect()->back();
+            }
+        } catch (ConnectionException $e) {
+            session()->flash('alert', 'error');
+            session()->flash('message', 'Vérifiez votre Connexion!');
+            return redirect()->back();
+        } catch (Exception $e) {
+            //    return $e->getMessage();
+            session()->flash('alert', 'error');
+            session()->flash('message', 'Erreur inattendue ! ');
+            return redirect()->back();
+        }
+    }
+
+    public function WalletToBank(Request $request)
+    {
+        try {
+
+            // return $request;
+            $data = $request->all();
+
+            set_time_limit(60);
+            $ApiLink = session('ApiLink');
+            $response = Http::withOptions(['verify' => false])->post($ApiLink, [
+                'codeapi' => 'pmobile',
+                'methode' => 'wwalettobank',
+                'refsession' => session('referencereponse'),
+                'numcel' => session('complete_telephone'),
+                'codeotp' => '',
+                'benefnom' => session('lastName'),
+                'benefprenom' => session('firstName'),
+                'commentaire' => '',
+                'refopration' => 12,
+                'idcompte' =>  $data['idcptemet'],
+                'montantope' => $data['montantope'],
+                'clientotp' => "1259633",
+                'idoperateur' => 1001,
+                'codeservice' => 'MAVIANCE_MOMO_ORANGE',
+                'numcelrecept' => '',
+                'typeoperecep' => '',
+                'receptnom' => 12,
+                'idoperateurrecept' => 0,
+                'codeservicerecept' => '',
+                'idcarte' => '',
+                'pan4' => '',
+                'idproduitcarte' => 1,
+                'idmonetiquecarte' => 0,
+                'idtypeoperecept' => 0,
+                'montantrecept' => 0,
+                'commirecept' => 0,
+                'codepin' => $data['codepin'],
+            ]);
+            // if($data['idcptrecept']==$data['idcptemet']){
+            //     session()->flash('alert', 'error');
+            //     session()->flash('message', 'Les comptes sont identiques!');
+            //     return redirect()->back();
+            // }
+            if ($response->successful()) {
+                $ApiResponse = $response->json();
+                // return $ApiResponse;
+                $ApiMessage = $ApiResponse['descriptreponse'];
+                if ($ApiMessage == 'SUCCESS') {
+                    session()->flash('alert', 'success');
+                    session()->flash('message', $ApiMessage);
+                    return redirect()->back();
+                } else {
+                    // return $ApiResponse;
+                    session()->flash('alert', 'error');
+                    session()->flash('message', $ApiMessage);
+                    return redirect()->back();
+                }
+            } else {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Erreur lors de l\'operation!');
+                return redirect()->back();
+            }
+        } catch (ConnectionException $e) {
+            session()->flash('alert', 'error');
+            session()->flash('message', 'Vérifiez votre Connexion!');
+            return redirect()->back();
+        } catch (Exception $e) {
+            //    return $e->getMessage();
+            session()->flash('alert', 'error');
+            session()->flash('message', 'Erreur inattendue ! ');
+            return redirect()->back();
+        }
     }
 }

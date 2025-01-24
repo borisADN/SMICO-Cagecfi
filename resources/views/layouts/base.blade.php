@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
@@ -46,6 +46,9 @@
      <!-- alertifyjs Css -->
      <link href="{{ asset('assets/libs/alertifyjs/build/css/alertify.min.css') }}" rel="stylesheet" type="text/css" />
 
+     {{-- spinner css --}}
+     <link href="{{ asset('assets/libs/spinner/spinner.css') }}" rel="stylesheet" type="text/css" />
+
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 </head>
@@ -88,6 +91,9 @@
 
         <!-- Sweet Alerts init js-->
         <script src="{{ asset('assets/js/pages/sweet-alerts.init.js') }}"></script>
+
+        {{-- spinner --}}
+        <script src="{{ asset('assets/libs/spinner/spinner.js') }}"></script>
 
 </body>
 

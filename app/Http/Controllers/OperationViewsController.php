@@ -51,6 +51,11 @@ class OperationViewsController extends Controller
         $userSpace = session('userSpace');
         $completeName = session('complete_name');
         $comptes = session('comptes');
+        $complete_telephone = session('complete_telephone');
+        $firstName = session('firstName');
+        $lastName = session('lastName');
+        $indicatif = session('indicatif');
+        $telephone = session('telephone');
 
         return view(
             'OperationViews.WalletToBank',
@@ -60,6 +65,12 @@ class OperationViewsController extends Controller
                 'completeName' => $completeName,
                 'comptes' => $comptes,
                 'refsession' => session('referencereponse'),
+                'complete_telephone' => $complete_telephone,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'indicatif' => $indicatif,
+                'telephone' => $telephone,
+
             ]
         );
     }
@@ -69,6 +80,12 @@ class OperationViewsController extends Controller
         $userSpace = session('userSpace');
         $completeName = session('complete_name');
         $comptes = session('comptes');
+        $complete_telephone = session('complete_telephone');
+        $firstName = session('firstName');
+        $lastName = session('lastName');
+        $indicatif = session('indicatif');
+        $telephone = session('telephone');
+       
 
         return view(
             'OperationViews.BankToWallet',
@@ -78,6 +95,31 @@ class OperationViewsController extends Controller
                 'completeName' => $completeName,
                 'comptes' => $comptes,
                 'refsession' => session('referencereponse'),
+                'complete_telephone' => $complete_telephone,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'indicatif' => $indicatif,
+                'telephone' => $telephone,
+                
+            ]
+        );
+    }
+
+    public function miseDispo(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.miseDispo',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
+
             ]
         );
     }
