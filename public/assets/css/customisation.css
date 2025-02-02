@@ -1,12 +1,13 @@
 :root{
     /* couleur de fond de la barre de navigation */
-    --bs-header-dark-bg:#000000;
+    --bs-header-dark-bg:#023047;
     /* couleur des texte de la barre de navigation */
     --bs-menu-dark-item-color:#ffffff;
     /* couleur de fond du footer */
-    --bs-footer-bg:#13be3e;
+    --bs-footer-bg:#023047;
     /* couleur des textes du footer */
-    --bs-footer-text-color:#ffffff;
+    /* --bs-footer-text-color:#ffffff; */
+    --bs-footer-color:#ffffff;
     /* couleur des textes dans le dropdown*/
      --bs-menu-item-color:#7b8190;
 
@@ -19,7 +20,7 @@
 }
 
 .custom-footer {
-    background: rgba(52, 253, 41, 0.5);
+    background:#023047;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(13px);
     -webkit-backdrop-filter: blur(13px);

@@ -1,0 +1,23 @@
+@extends('layouts.base')
+@section('content')
+    @include('includes.topbar')
+    @include('includes.spinner')
+    <div class="main-content mb-5">
+        <div class="row custom-card">
+            <div class="col-lg-12 ">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4 class="card-title text-center fw-bold">MISE A DISPOSITION</h4>
+                    </div>
+
+                    <div class="card-body p-4 mb-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @include('includes.footer')
+@endsection

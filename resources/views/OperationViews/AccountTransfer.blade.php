@@ -1,8 +1,5 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
 @extends('layouts.base')
-
-
 @section('content')
     @include('includes.topbar')
     @include('includes.spinner')
@@ -10,6 +7,7 @@
     <div class="main-content mb-5">
         <div class="row custom-card  ">
             <div class="col-lg-12 ">
+
                 <div id="alert-placeholder">
 
                     {{-- Alerte de type erreur --}}
@@ -20,15 +18,6 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-
-                    @if (session('alert') === 'success' && session('message'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="uil uil-check-circle me-2"></i>
-                            {{ session('message') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-
                 </div>
 
                 {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -36,7 +25,6 @@
                Solde insuffisant sur le compte
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>  --}}
-
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title text-center fw-bold">TRANSFERT ENTRE MES COMPTES</h4>
@@ -170,8 +158,18 @@
         </div>
         <script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script>
         <script src="{{ asset('assets/libs/showAlert/showAlert.js') }}"></script>
-
+        <script src="{{ asset('assets/js/pages/sweet-alerts.init.js') }}"></script>
+        
         <script>
+ function showSuccessAlert() {
+                Swal.fire({
+                    title: "Succès!",
+                    text: "L'operation a été effectuée avec success.",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            }
+
             function handleFinish() {
                 Swal.fire({
                     title: "Entrez votre code PIN",
@@ -223,7 +221,9 @@
             // Exécute le script une fois que le document HTML est complètement chargé
             $(document).ready(function() {
                 // Ajoute un événement "click" au bouton avec l'ID "trigger-api-btn"
-                $('#trigger-api-btn').on('click', function() {
+                $('#trigger-api-btn').on('click', function(event) {
+                    event.preventDefault();
+
                     // Affiche une icône de chargement
                     showSpinner('Veuillez patienter...');
                     const idcompte = $('#compte-select').val();
@@ -252,7 +252,9 @@
                             refsession: "{{ session('refsession') }}",
                             idcompte: $('#compte-select').val(),
                             montantcommission: $('#montantcommission').val() || 0,
-                            datesolde: datesolde
+                            // pour le moment passer cette Date en dur pour les test
+                            // datesolde: datesolde
+                            datesolde: 20241126155352098
                         },
                         success: function(response) {
                             console.log(response);
@@ -355,4 +357,12 @@
         </script>
         @include('includes.footer')
     </div>
+
+    @if (session('alert') === 'success' && session('message'))
+        <script>
+            setTimeout(function() {
+                showSuccessAlert();
+            }, 1000);
+        </script>
+    @endif
 @endsection

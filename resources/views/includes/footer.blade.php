@@ -15,3 +15,6 @@
         </div>
     </div>
 </footer>
+
+{{-- gestion institution --}}
+{{-- gestion PARTENAIRE --}}

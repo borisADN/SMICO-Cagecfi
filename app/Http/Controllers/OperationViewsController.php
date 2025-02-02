@@ -108,14 +108,14 @@ class OperationViewsController extends Controller
         );
     }
 
-    public function miseDispo(){
+    public function MiseDispo(){
         $groupedOptions = session('groupedOptions');
         $userSpace = session('userSpace');
         $completeName = session('complete_name');
         $comptes = session('comptes');
 
         return view(
-            'OperationViews.miseDispo',
+            'OperationViews.MiseDispo',
             [
                 'groupedOptions' => $groupedOptions,
                 'userSpace' => $userSpace,
@@ -123,6 +123,115 @@ class OperationViewsController extends Controller
                 'comptes' => $comptes,
                 'refsession' => session('referencereponse'),
 
+            ]
+        );
+    }
+
+    public function ReglFacture(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.ReglFacture',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
+            ]
+        );
+
+    }
+
+    public function ReglAchat(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.ReglAchat',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
+            ]
+        );
+    }
+
+    public function DemandeChequier(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.DemandeChequier',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
+            ]
+        );
+    }
+
+    public function DemandeDecvt(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.Demandecouvert',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
+            ]
+        );
+    }
+
+    public function DemandeDesvce(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.DemandeDesvce',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
+            ]
+            );
+    }
+
+    public function RechargeCarte(){
+        $groupedOptions = session('groupedOptions');
+        $userSpace = session('userSpace');
+        $completeName = session('complete_name');
+        $comptes = session('comptes');
+
+        return view(
+            'OperationViews.RechargeCarte',
+            [
+                'groupedOptions' => $groupedOptions,
+                'userSpace' => $userSpace,
+                'completeName' => $completeName,
+                'comptes' => $comptes,
+                'refsession' => session('referencereponse'),
             ]
         );
     }

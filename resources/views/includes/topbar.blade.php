@@ -112,6 +112,7 @@
                 <div class="dropdown-menu dropdown-menu-end pt-0">
                     <h6 class="dropdown-header">Welcome {{ $completeName }}</h6>
 
+                    @if (isset($userSpace) && is_array($userSpace) && count($userSpace) > 0)
                     @foreach ($userSpace as $option)
                         <a class="dropdown-item" href="{{ url($option['urlParam']) }}">
                             <span class="align-middle" data-key="{{ $option['dataKey'] }}">
@@ -119,6 +120,12 @@
                             </span>
                         </a>
                     @endforeach
+                @else
+                    <script>
+                        // Redirection JavaScript (non recommandé si tu peux le faire dans le contrôleur)
+                        window.location.href = "{{ route('logout') }}";
+                    </script>
+                @endif
 
                     <div class="dropdown-divider"></div>
 

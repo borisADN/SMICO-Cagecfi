@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\ConnectionException;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 // Laravel intègre Guzzle, un client HTTP pour envoyer des requêtes HTTP (comme GET, POST, PUT, DELETE, etc.)
@@ -13,6 +14,12 @@ use Illuminate\Http\Client\ConnectionException;
 
 class ApiController extends Controller
 {
+// Fonction pour recuperer l'id de l'operation en cours
+    public function getSettingValueFromSession($key)
+    {
+        $settings = session('settings', collect());
+        return $settings->get($key, null);
+    }
 
     public function Apilogin(Request $request)
     {
@@ -56,7 +63,12 @@ class ApiController extends Controller
 
                     session()->put('referencereponse', $data['referencereponse']);
 
-                    // return $data['listehabil'];
+                    // Transformer le tableau en format clé-valeur
+                    $formattedData = collect($data['settings'])->pluck('referenceReponse', 'descriptReponse');
+                    // return $formattedData;
+                    session()->put('settings', $formattedData);
+
+
 
                     if (!isset($data['listehabil'], $data['descriptreponse'])) {
                         session()->flash('alert', 'error');
@@ -205,6 +217,7 @@ class ApiController extends Controller
         // Vérifie que la réponse est bien un JSON
         if ($response->successful()) {
             $solde_data = $response->json();
+            // return response()->json(['solde' => $solde_data]);
             if (array_key_exists('referencereponse', $solde_data) && !empty($solde_data['referencereponse'])) {
                 $solde = $solde_data['referencereponse'];
                 return response()->json(['solde' => $solde]);
@@ -221,8 +234,15 @@ class ApiController extends Controller
     public function accountTransfert(Request $request)
     {
         try {
-            $data = $request->all();
+            $valeur = $this->getSettingValueFromSession('TYPE_OPE_VIREMENT_COMPTE');
+            // return $valeur; // Affichera "3" si la clé existe
 
+            $data = $request->all();
+            if ($data['idcptrecept'] == $data['idcptemet']) {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Les comptes sont identiques!');
+                return redirect()->back();
+            }
             set_time_limit(60);
 
             $ApiLink = session('ApiLink');
@@ -235,7 +255,7 @@ class ApiController extends Controller
                 'montantope' => $data['montantope'],
                 'codepinagent' => '',
                 'codeotp' => '',
-                'idtypeoperation' => 12,
+                'idtypeoperation' => $valeur,
                 'descriptionoperation' => '',
                 'suffixedescription' => '',
                 'commission' => 0,
@@ -243,18 +263,14 @@ class ApiController extends Controller
                 'codepinemet' => $data['codepinemet'],
             ]);
 
-            if ($data['idcptrecept'] == $data['idcptemet']) {
-                session()->flash('alert', 'error');
-                session()->flash('message', 'Les comptes sont identiques!');
-                return redirect()->back();
-            }
             
+
             if ($response->successful()) {
                 $ApiResponse = $response->json();
                 $ApiMessage = $ApiResponse['descriptreponse'];
                 if ($ApiMessage == 'SUCCESS') {
                     session()->flash('alert', 'success');
-                    session()->flash('message', $ApiMessage);
+                    session()->flash('message', 'Votre opération a été effectuée avec succès.');
                     return redirect()->back();
                 } else {
                     session()->flash('alert', 'error');
@@ -271,6 +287,7 @@ class ApiController extends Controller
             session()->flash('message', 'Vérifiez votre Connexion!');
             return redirect()->back();
         } catch (Exception $e) {
+            // return $e->getMessage();
             session()->flash('alert', 'error');
             session()->flash('message', 'Une erreur inattendue ! ');
             return redirect()->back();
@@ -325,9 +342,10 @@ class ApiController extends Controller
 
     public function virementProcess(Request $request)
     {
-
         try {
             $data = $request->all();
+            $valeur = $this->getSettingValueFromSession('TYPE_OPE_VIREMENT_COMPTE');
+            
 
             set_time_limit(60);
             $ApiLink = session('ApiLink');
@@ -340,7 +358,7 @@ class ApiController extends Controller
                 'montantope' => $data['montantope'],
                 'codepinagent' => '',
                 'codeotp' => '',
-                'idtypeoperation' => 12,
+                'idtypeoperation' => $valeur,
                 'descriptionoperation' => '',
                 'suffixedescription' => '',
                 'commission' => 0,
@@ -488,7 +506,7 @@ class ApiController extends Controller
                 'commirecept' => 0,
                 'codepin' => $data['codepin'],
             ]);
-        
+
             if ($response->successful()) {
                 $ApiResponse = $response->json();
                 $ApiMessage = $ApiResponse['descriptreponse'];
