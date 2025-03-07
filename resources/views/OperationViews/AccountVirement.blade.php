@@ -17,13 +17,6 @@
                     </div>
                 @endif
 
-                @if (session('alert') === 'success' && session('message'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="uil uil-check-circle me-2"></i>
-                        {{ session('message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 </div>
 
                 <div class="card">
@@ -220,6 +213,15 @@
                     }
                 });
             }
+
+            function showSuccessAlert() {
+                Swal.fire({
+                    title: "Succès!",
+                    text: "L'operation a été effectuée avec succes.",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            }
         </script>
 
         {{-- Script pour verifier le solde du compte emetteur --}}
@@ -260,7 +262,7 @@
                             refsession: "{{ session('refsession') }}",
                             idcompte: $('#compte-select').val(),
                             montantcommission: $('#montantcommission').val() || 0,
-                            datesolde: datesolde
+                            datesolde: 20241126155352098
                         },
                         success: function(response) {
                             // console.log(response);
@@ -350,8 +352,11 @@
                             success: function(response) {
                                 // Vérification et affichage de la commission reçue
                                 if (response.commission) {
+                                    console.log(response);
+                                    
                                     $('#commission_screen').val(response.commission);
                                 } else {
+                                    console.log(response);
                                     showAlert(
                                         'Une erreur est survenue lors de la récupération de la commission!'
                                     );
@@ -597,4 +602,11 @@
         </script>
         @include('includes.footer')
     </div>
+    @if (session('alert') === 'success' && session('message'))
+    <script>
+        setTimeout(function() {
+            showSuccessAlert();
+        }, 1000);
+    </script>
+@endif
 @endsection

@@ -159,17 +159,9 @@
         <script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script>
         <script src="{{ asset('assets/libs/showAlert/showAlert.js') }}"></script>
         <script src="{{ asset('assets/js/pages/sweet-alerts.init.js') }}"></script>
-        
-        <script>
- function showSuccessAlert() {
-                Swal.fire({
-                    title: "Succès!",
-                    text: "L'operation a été effectuée avec success.",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
-            }
 
+        <script>
+    
             function handleFinish() {
                 Swal.fire({
                     title: "Entrez votre code PIN",
@@ -190,6 +182,7 @@
                         if (!pin || pin.length !== 4) {
                             Swal.showValidationMessage("Veuillez entrer un PIN à 4 chiffres.");
                         } else {
+                            // Mettez ici le code pour vérifier le PIN et effectuer l'opération
                             return pin; // Renvoie le PIN pour une utilisation ultérieure
                         }
                     },
@@ -212,6 +205,15 @@
                             confirmButtonColor: "#776acf",
                         });
                     }
+                });
+            }
+
+            function showSuccessAlert() {
+                Swal.fire({
+                    title: "Succès!",
+                    text: "L'operation a été effectuée avec succes.",
+                    icon: "success",
+                    confirmButtonText: "OK"
                 });
             }
         </script>
@@ -323,7 +325,7 @@
                             refsession: "{{ session('refsession') }}",
                             idcompte: $('#compte-select2').val(),
                             montantcommission: $('#montantcommission').val() || 0,
-                            datesolde: datesolde
+                            datesolde: 20241126155352098
                         },
                         success: function(response) {
                             console.log(response);

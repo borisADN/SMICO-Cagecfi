@@ -14,7 +14,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ApiController extends Controller
 {
-// Fonction pour recuperer l'id de l'operation en cours
+    // Fonction pour recuperer l'id de l'operation en cours
     public function getSettingValueFromSession($key)
     {
         $settings = session('settings', collect());
@@ -263,7 +263,7 @@ class ApiController extends Controller
                 'codepinemet' => $data['codepinemet'],
             ]);
 
-            
+
 
             if ($response->successful()) {
                 $ApiResponse = $response->json();
@@ -296,8 +296,9 @@ class ApiController extends Controller
 
     public function commissionVirement(Request $request)
     {
+        
         $data = $request->all();
-
+        $valeur = $this->getSettingValueFromSession('TYPE_OPE_VIREMENT_COMPTE');
         $ApiLink = session('ApiLink');
         $response = Http::withOptions(['verify' => false])->post($ApiLink, [
             'codeapi' => 'pmobile',
@@ -306,14 +307,14 @@ class ApiController extends Controller
             'categoriefrais' => "WB",
             'typecommi' => "",
             'montantope' => $data['montantope'],
-            'typeope' => 12,
+            'typeope' => $valeur,
             'idcpte' => $data['idcompte'],
             'estinclus' => false,
         ]);
         if ($response->successful()) {
             $apiResponse = $response->json();
             $commission = $apiResponse['referencereponse'];
-            return response()->json(['commission' => $commission]);
+            return response()->json(['commission' => $apiResponse]);
         } else {
             return "error";
         }
@@ -344,8 +345,13 @@ class ApiController extends Controller
     {
         try {
             $data = $request->all();
-            $valeur = $this->getSettingValueFromSession('TYPE_OPE_VIREMENT_COMPTE');
-            
+            $id_type_operation = $this->getSettingValueFromSession('TYPE_OPE_VIREMENT_COMPTE');
+
+            if ($data['idcptrecept'] == $data['idcptemet']) {
+                session()->flash('alert', 'error');
+                session()->flash('message', 'Les comptes sont identiques!');
+                return redirect()->back();
+            }
 
             set_time_limit(60);
             $ApiLink = session('ApiLink');
@@ -358,19 +364,13 @@ class ApiController extends Controller
                 'montantope' => $data['montantope'],
                 'codepinagent' => '',
                 'codeotp' => '',
-                'idtypeoperation' => $valeur,
+                'idtypeoperation' => $id_type_operation,
                 'descriptionoperation' => '',
                 'suffixedescription' => '',
                 'commission' => 0,
                 'refmanuel' => '',
                 'codepinemet' => $data['codepinemet'],
             ]);
-
-            if ($data['idcptrecept'] == $data['idcptemet']) {
-                session()->flash('alert', 'error');
-                session()->flash('message', 'Les comptes sont identiques!');
-                return redirect()->back();
-            }
 
             if ($response->successful()) {
                 $ApiResponse = $response->json();

@@ -259,7 +259,7 @@
                             refsession: "{{ session('refsession') }}",
                             idcompte: $('#compte-select').val(),
                             montantcommission: $('#montantcommission').val() || 0,
-                            datesolde: datesolde
+                            datesolde: 20241126155352098
                         },
                         success: function(response) {
                             // console.log(response);

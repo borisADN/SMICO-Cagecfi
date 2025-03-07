@@ -181,6 +181,7 @@
         <script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script>
         <script src="{{ asset('assets/libs/alertifyjs/build/alertify.min.js') }}"></script>
         <script src="{{ asset('assets/libs/showAlert/showAlert.js') }}"></script>
+        
         <script>
             function handleFinish() {
                 Swal.fire({
@@ -215,6 +216,7 @@
                         form.appendChild(hiddenPinField);
 
                         form.submit();
+                        showSpinner('Veuillez patienter...');
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         Swal.fire({
                             icon: "info",
@@ -229,9 +231,9 @@
         <script>
             // Exécute le script une fois que le document HTML est complètement chargé
             $(document).ready(function() {
-                showSpinner();
                 // Ajoute un événement "click" au bouton avec l'ID "trigger-api-btn"
                 $('#trigger-api-btn').on('click', function() {
+                    showSpinner();
                     // Désactive le bouton pour éviter les clics multiples pendant la requête
                     const button = $(this);
                     button.prop('disabled', true).html(
@@ -263,7 +265,7 @@
                             refsession: "{{ session('refsession') }}",
                             idcompte: $('#compte-select').val(),
                             montantcommission: $('#montantcommission').val() || 0,
-                            datesolde: datesolde
+                            datesolde: 20241126155352098
                         },
                         success: function(response) {
                             // console.log(response);
